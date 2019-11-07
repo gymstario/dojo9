@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use bitspro\StripeMarketplace\StripeMarketplace;
+
 class HomeController extends Controller
 {
     /**
@@ -12,6 +14,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $obj = new StripeMarketplace();
         // $this->middleware('auth:api')
 
         // ToDo: If you want to redo the authentication
