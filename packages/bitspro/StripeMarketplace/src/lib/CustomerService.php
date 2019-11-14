@@ -1,6 +1,6 @@
 <?php
 
-namespace bitspro\StripeMarketplace;
+namespace bitspro\StripeMarketplace\lib;
 
 use Stripe\Customer;
 
@@ -36,12 +36,13 @@ class CustomerService
         ];
     }
 
-    public static function setup($id, $name, $email, $stripeId = null)
+    public static function save($id, $name, $email, $payment_method, $stripeId = null)
     {
         $data = [
             'name' => $name,
             'email' => $email,
             'description' => $id,
+            'payment_method' => $payment_method,
         ];
         if ($stripeId == null || $stripeId == '') {
             $customer = Customer::create($data);

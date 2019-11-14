@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use bitspro\StripeMarketplace\StripeMarketplace;
+use bitspro\StripeMarketplace\StripeMarketplaceManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +12,7 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $ob = new StripeMarketplace();
+        $ob = new StripeMarketplaceManager();
         dd($ob);
     }
 
