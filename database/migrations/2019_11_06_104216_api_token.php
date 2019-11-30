@@ -19,9 +19,7 @@ class ApiToken extends Migration
                 ->nullable()
                 ->default(null);
             $table->string('role')->after('api_token')->default('student');
-            $table->date('email_verified_at')->after('role')
-                ->nullable()
-                ->default(null);
+            
         });
     }
 

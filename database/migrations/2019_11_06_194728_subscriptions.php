@@ -23,7 +23,7 @@ class Subscriptions extends Migration
             });
 
             Schema::table('subscriptions', function (Blueprint $table) {
-                $table->foreign('member_id')->references('id')->on('members');
+              ///  $table->foreign('member_id')->references('id')->on('members');
             });
         }
     }

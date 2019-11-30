@@ -37,7 +37,7 @@ class Members extends Migration
             });
 
             Schema::table('members', function (Blueprint $table) {
-                $table->foreign('user_id')->references('id')->on('users');
+              //  $table->foreign('user_id')->references('id')->on('users');
             });
         }
 
@@ -57,7 +57,7 @@ class Members extends Migration
             });
 
             Schema::table('member_dependents', function (Blueprint $table) {
-                $table->foreign('member_id')->references('id')->on('members');
+              //  $table->foreign('member_id')->references('id')->on('members');
             });
         }
     }

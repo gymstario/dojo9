@@ -36,7 +36,7 @@ class Stores extends Migration
             });
 
             Schema::table('stores', function (Blueprint $table) {
-                $table->foreign('member_id')->references('id')->on('members');
+              //  $table->foreign('member_id')->references('id')->on('members');
             });
         }
 
@@ -56,7 +56,7 @@ class Stores extends Migration
             });
 
             Schema::table('branches', function (Blueprint $table) {
-                $table->foreign('store_id')->references('id')->on('stores');
+              //  $table->foreign('store_id')->references('id')->on('stores');
             });
         }
     }
