@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
-    protected $table = 'dojo';
+    protected $table = 'subscriptions';
+
+    public function member(){
+        return $this->belongsTo('App\Models\Member');
+    }
 }

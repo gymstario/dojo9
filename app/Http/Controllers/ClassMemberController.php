@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Class_Member;
 use Illuminate\Http\Request;
 
-class ClassController extends Controller
+class ClassMemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,25 +30,26 @@ class ClassController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ClassRequest  $request
+     * @param  ClassMembRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClassRequest $request)
+    public function store(ClassMembRequest $request)
     {
-        $class = Class::create([
-            'start' => $request->start,
-            'end' => $request->end,
-            'days' => $request->days
+        $class_Member = Class_Member::create([
+
+            'joining' => $request->joining,
+            'days' => $request->days,
+            'type' => $request->type,
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Class_Member  $class_Member
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Class_Member $class_Member)
     {
         //
     }
@@ -55,10 +57,10 @@ class ClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Class_Member  $class_Member
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Class_Member $class_Member)
     {
         //
     }
@@ -67,10 +69,10 @@ class ClassController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Class_Member  $class_Member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Class_Member $class_Member)
     {
         //
     }
@@ -78,10 +80,10 @@ class ClassController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Class_Member  $class_Member
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Class_Member $class_Member)
     {
         //
     }
