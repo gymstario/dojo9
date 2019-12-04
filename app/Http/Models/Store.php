@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    protected $table = 'dojo';
+    protected $table = 'stores';
+
+    public function member(){
+        return $this->belongsTo('App\Models\Member');
+    }
+
+    public function branch(){
+        return $this->hasMany('App\Models\branch');
+    }
 }

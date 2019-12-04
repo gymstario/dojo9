@@ -30,12 +30,28 @@ class StoreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $store = Store::create([
+
+            'name' =>  $request->name,
+            'phone' => $request->phone,
+            'address' => $request->addres,
+            'city' => $request->city,
+            'state' => $request->state,
+            'zip' => $request->zip,
+            'country' => $request->country,
+            'tax_id' => $request->tax_id,
+            'mcc' => $request->mcc,
+            'url' => $request->url,
+            'description' => $request->description,
+            'date' => $request->date,
+            'ip' => $request->ip
+
+        ]);
     }
 
     /**

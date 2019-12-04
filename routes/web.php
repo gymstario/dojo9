@@ -11,11 +11,13 @@
 |
  */
 
+Auth::routes(['verify' => true]);
+Route::get("/plans", ["as" => "auth.plans.get", "uses" => "Auth\PlanController@getPlans"]);
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get("/business/setup", ["as" => "auth.business.setup.get", "uses" => "CommerceController@getAgencyRequest"]);
+// Route::get("/business/setup", ["as" => "auth.business.setup.get", "uses" => "CommerceController@getAgencyRequest"]);

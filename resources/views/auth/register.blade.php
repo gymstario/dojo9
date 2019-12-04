@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="rui-sign">
-    <div class="row w-100">
+    <div class="row w-100" style="margin-left: 0; margin-right: 0;">
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
             {{ Form::open(["id" => "payment-form", "class" => "form rui-sign-form", "style" => "min-width: 600px"]) }}
                 <div class="row vertical-gap sm-gap justify-content-center">

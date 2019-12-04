@@ -37,8 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function member()
-    {
-        return $this->hasOne('App\Http\Models\Member');
-    }
+    public function member(){
+		return $this->hasOne('App\Models\Member');
+	}
 }

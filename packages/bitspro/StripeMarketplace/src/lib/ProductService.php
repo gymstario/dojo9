@@ -6,12 +6,20 @@ use Stripe\Product;
 
 class ProductService
 {
-    public static function getAll($limit = 100)
+    public static function getAll($limit = 100, $stripeAccountId = null)
     {
         $options = [
             'limit' => $limit,
         ];
-        $products = Product::all($options);
+
+        if ($stripeAccountId == null || $stripeAccountId == '') {
+            $products = Product::all($options, ["stripe_account" => null]);
+        } else {
+            $products = Product::all($options, ["stripe_account" => $stripeAccountId]);
+        }
+
+        return $products;
+
         $return = [];
         foreach ($products as $product) {
             $return[] = [

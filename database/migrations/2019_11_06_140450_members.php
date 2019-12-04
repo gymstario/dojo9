@@ -57,7 +57,7 @@ class Members extends Migration
             });
 
             Schema::table('member_dependents', function (Blueprint $table) {
-                //  $table->foreign('member_id')->references('id')->on('members');
+              //  $table->foreign('member_id')->references('id')->on('members'); // hasMany
             });
         }
     }

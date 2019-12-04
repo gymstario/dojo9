@@ -6,7 +6,7 @@ use Stripe\Account;
 
 class AccountService
 {
-    public static function getAll($limit = 100, $stripeId)
+    public static function getAll($limit = 100)
     {
         $options = [
             'limit' => $limit,

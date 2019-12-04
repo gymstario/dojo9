@@ -271,7 +271,7 @@ function fetch_from_data(array $data, $key, $input = "")
     if ($key == "") {
         return (isset($data[$key]) && $data[$key] != null ? $data[$key] : "");
     } else {
-        return ((isset($_POST[$input]) != "" ? $_POST[$input] : isset($data[$key]) && $data[$key] != null ? $data[$key] : ""));
+        return ((isset($_POST[$input]) != "" ? $_POST[$input] : (isset($data[$key]) && $data[$key] != null ? $data[$key] : "")));
     }
 }
 
@@ -291,7 +291,7 @@ function fetch_from_date_data(array $data, $key, $input = "")
     if ($key == "") {
         return isset($data[$key]) && $data[$key] != null ? date("m/d/Y", $data[$key]) : "";
     } else {
-        return (isset($_POST[$input]) != "" ? $_POST[$input] : isset($data[$key]) && $data[$key] != null ? date("m/d/Y", $data[$key]) : "");
+        return (isset($_POST[$input]) != "" ? $_POST[$input] : (isset($data[$key]) && $data[$key] != null ? date("m/d/Y", $data[$key]) : ""));
     }
 }
 

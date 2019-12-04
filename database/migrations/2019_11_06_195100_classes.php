@@ -25,7 +25,7 @@ class Classes extends Migration
             });
 
             Schema::table('classes', function (Blueprint $table) {
-               // $table->foreign('branch_id')->references('id')->on('branches');
+               // $table->foreign('branch_id')->references('id')->on('branches'); // hasMany
             });
         }
 
@@ -42,8 +42,8 @@ class Classes extends Migration
             });
 
             Schema::table('class_members', function (Blueprint $table) {
-              //  $table->foreign('class_id')->references('id')->on('classes');
-               // $table->foreign('member_id')->references('id')->on('members');
+              //  $table->foreign('class_id')->references('id')->on('classes'); // hasMany
+               // $table->foreign('member_id')->references('id')->on('members'); // hasMany
             });
         }
     }

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Members;
 use Illuminate\Http\Request;
+use App\Http\Requests\MemberCreateRequest;
 
-class MembersController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,12 +31,30 @@ class MembersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  MemberCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MemberCreateRequest $request)
     {
-        //
+        $member = Member::create([
+
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'dob'   => $request->dob,
+                'address'   => $request->address,
+                'city'  => $request->city,
+                'state' => $request->state,
+                'zip'   => $request->zip,
+                'country' => $request->country,
+                'ssn_last_4' => $request->ssn_last_4,
+                'title' => $request->title,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'strip_customer_id' => $request->strip_customer_id,
+              'enrolment' => $request->enrolment
+			
+        ]);    
+
     }
 
     /**

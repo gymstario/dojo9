@@ -6,12 +6,17 @@ use Stripe\Plan;
 
 class PlanService
 {
-    public static function getAll($limit = 100, $stripeId)
+    public static function getAll($limit = 100, $stripeAccountId = null)
     {
         $options = [
             'limit' => $limit,
         ];
-        $plans = Plan::all($options);
+        if ($stripeAccountId === null) {
+            $plans = Plan::all($options);
+        } else {
+            $plans = Plan::all($options, ["stripe_account" => $stripeAccountId]);
+        }
+        return $plans;
         $return = [];
         foreach ($plans as $plan) {
             $return[] = [
