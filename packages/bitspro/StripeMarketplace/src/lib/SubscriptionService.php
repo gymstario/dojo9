@@ -33,7 +33,7 @@ class SubscriptionService
         return Subscription::retrieve($id);
     }
 
-    public static function save($customerId, $planId, $stripeAccountId = '', $stripeId = null)
+    public static function save($customerId, $planId, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             "customer" => $customerId,
@@ -42,7 +42,7 @@ class SubscriptionService
             ],
         ];
         if ($stripeId == null || $stripeId == '') {
-            if ($stripeAccountId === '') {
+            if ($stripeAccountId === null) {
                 $subscription = Subscription::create($data);
             } else {
                 $subscription = Subscription::create($data, ["stripe_account" => $stripeAccountId]);

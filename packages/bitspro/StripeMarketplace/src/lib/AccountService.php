@@ -33,14 +33,14 @@ class AccountService
         return Account::retrieve($id);
     }
 
-    public static function create(
+    public static function save(
         $type,
         $firstName,
         $lastName,
         $email,
         $phone,
         $address,
-        $mcc = null,
+        $mcc = null, // dance_hall_studios_schools
         $business = null,
         $ip = null,
         $ssn = null,
@@ -55,37 +55,165 @@ class AccountService
                 'transfers',
             ],
             "business_type" => $type,
-        ];
-
-        if ($type === 'company') {
-            $data["business_profile"] = [
+            "tos_acceptance" => [
+                "date" => 1547923073,
+                "ip" => "172.18.80.19",
+            ],
+            /* "external_account" => [
+            "object" => "bank_account",
+            "country" => 'US',
+            "currency" => "usd",
+            "routing_number" => "110000000",
+            "account_number" => "000123456789",
+            ], */
+            "business_profile" => [
                 "mcc" => $mcc,
                 "name" => $business,
-            ];
-            $data["company"] = [
-                "address" => $address,
-                "name" => $business,
-                "phone" => $phone,
-                "tos_acceptance" => [
-                    "date" => time(),
-                    "ip" => $ip,
+                "support_email" => "riz@bitspro.com",
+                "support_phone" => $phone,
+                "url" => "https://www.bitspro.com",
+            ],
+            "company" => [
+                "tax_id" => "000000000",
+                "address" => [
+                    "country" => "US",
+                    "line1" => "123 State St",
+                    "city" => "Schenectady",
+                    "state" => "NY",
+                    "postal_code" => 12345,
                 ],
-            ];
-        } else {
-            $data["individual"] = [
-                "address" => $address,
-                "first_name" => $firstName,
-                "last_name" => $lastName,
+                "name" => "The Best Cookie Co",
                 "phone" => $phone,
-                "ssn_last_4" => $ssn,
-            ];
-        }
+                "tax_id" => 000000000,
+            ],
+        ];
+
+        /* if ($type === 'company') {
+        $data["business_profile"] = [
+        "mcc" => $mcc,
+        "name" => $business,
+        "support_email" => "riz@bitspro.com",
+        "support_phone" => $phone,
+        "url" => "https://www.bitspro.com",
+        ];
+        $data["company"] = [
+        "tax_id" => "000000000",
+        "address" => [
+        "country" => "US",
+        "line1" => "123 State St",
+        "city" => "Schenectady",
+        "state" => "NY",
+        "postal_code" => 12345,
+        ],
+        "name" => "The Best Cookie Co",
+        "phone" => "12345678",
+        "tax_id" => 000000000,
+        "external_account" => [
+        "object" => "bank_account",
+        "country" => 'US',
+        "currency" => "usd",
+        "routing_number" => "110000000",
+        "account_number" => "000123456789",
+        ],
+        "tos_acceptance" => [
+        "date" => 1547923073,
+        "ip" => "172.18.80.19",
+        ],
+        "verification" => [
+        "document" => [
+        "front" => "file_identity_document_success",
+        "back" => "file_identity_document_success",
+        ],
+        ],
+
+        ];
+        } else {
+        $data["individual"] = [
+        "address" => $address,
+        "first_name" => $firstName,
+        "last_name" => $lastName,
+        "phone" => $phone,
+        "ssn_last_4" => $ssn,
+        ];
+        } */
 
         if ($stripeId == null || $stripeId == '') {
             $account = Account::create($data);
         } else {
             $account = Account::update($stripeId, $data);
         }
+
+        Account::createPerson($account['id'], [
+            "first_name" => "Jenny",
+            "last_name" => "Rosen",
+            "relationship" => [
+                "representative" => true,
+                "executive" => true,
+                "title" => "CEO",
+            ],
+            "address" => [
+                "country" => "US",
+                "line1" => "123 State St",
+                "city" => "Schenectady",
+                "state" => "NY",
+                "postal_code" => 12345,
+            ],
+            "dob" => [
+                "day" => 10,
+                "month" => 11,
+                "year" => 1980,
+            ],
+            "id_number" => "000000000",
+            "phone" => $phone,
+            "email" => "jenny@cookies.com",
+        ]);
+
+        Account::createPerson($account['id'], [
+            "first_name" => "Kathleen",
+            "last_name" => "Banks",
+            "relationship" => [
+                "owner" => true,
+                "percent_ownership" => 100,
+            ],
+            "address" => [
+                "country" => "US",
+                "line1" => "123 State St",
+                "city" => "Schenectady",
+                "state" => "NY",
+                "postal_code" => 12345,
+            ],
+            "dob" => [
+                "day" => 10,
+                "month" => 11,
+                "year" => 1980,
+            ],
+            "id_number" => "000000000",
+            "phone" => $phone,
+            "email" => "jenny@cookies.com",
+        ]);
+
+        /* Account::createPerson($account['id'], [
+        "first_name" => "Kathleena",
+        "last_name" => "Banks",
+        "relationship" => [
+        "executive" => true,
+        ],
+        "address" => [
+        "country" => "US",
+        "line1" => "123 State St",
+        "city" => "Schenectady",
+        "state" => "NY",
+        "postal_code" => 12345,
+        ],
+        "dob" => [
+        "day" => 10,
+        "month" => 11,
+        "year" => 1980,
+        ],
+        "id_number" => "000000000",
+        "phone" => $phone,
+        "email" => "jennya@cookies.com",
+        ]); */
 
         return $account['id'];
 

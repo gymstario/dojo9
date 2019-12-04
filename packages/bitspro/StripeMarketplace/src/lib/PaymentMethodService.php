@@ -6,18 +6,26 @@ use Stripe\PaymentMethod;
 
 class PaymentMethodService
 {
-    public static function save($number, $month, $year, $cvc)
+    public static function save($number, $month, $year, $cvc, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             'type' => 'card',
             'card' => [
                 'number' => $number,
-                'month' => $month,
-                'year' => $year,
+                'exp_month' => $month,
+                'exp_year' => $year,
                 'cvc' => $cvc,
             ],
         ];
-        $paymentMethod = PaymentMethod::create($data);
+        if ($stripeId == null || $stripeId == '') {
+            if ($stripeAccountId === '') {
+                $paymentMethod = PaymentMethod::create($data);
+            } else {
+                $paymentMethod = PaymentMethod::create($data, ["stripe_account" => $stripeAccountId]);
+            }
+        } else {
+            $paymentMethod = PaymentMethod::update($stripeId, $data);
+        }
         return $paymentMethod['id'];
 
     }

@@ -3,6 +3,7 @@
 namespace bitspro\StripeMarketplace\lib;
 
 use Stripe\Customer;
+use Stripe\Token;
 
 class CustomerService
 {
@@ -36,16 +37,26 @@ class CustomerService
         ];
     }
 
-    public static function save($id, $name, $email, $payment_method, $stripeId = null)
+    public static function save($id, $name, $email, $payment_method, $source, $stripeAccountId = null, $stripeId = null)
     {
+
+        $token = Token::create([
+            'card' => $source,
+        ]);
+
         $data = [
             'name' => $name,
             'email' => $email,
             'description' => $id,
             'payment_method' => $payment_method,
+            'source' => $token['id'],
         ];
         if ($stripeId == null || $stripeId == '') {
-            $customer = Customer::create($data);
+            if ($stripeAccountId === '') {
+                $customer = Customer::create($data);
+            } else {
+                $customer = Customer::create($data, ["stripe_account" => $stripeAccountId]);
+            }
         } else {
             $customer = Customer::update($stripeId, $data);
         }

@@ -13,7 +13,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $ob = new StripeMarketplaceManager();
-        dd($ob);
     }
 
     /**

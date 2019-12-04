@@ -26,18 +26,18 @@ class Members extends Migration
                 $table->string('state');
                 $table->string('zip');
                 $table->string('country');
-                $table->string('ssn_last_4');
-                $table->string('title');
+                $table->string('ssn_last_4')->nullable();
+                $table->string('title')->nullable();
                 $table->string('email');
                 $table->string('phone');
-                $table->string('strip_customer_id');
-                $table->date('enrolment');
+                $table->string('strip_customer_id')->nullable();
+                $table->date('enrolment')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
             });
 
             Schema::table('members', function (Blueprint $table) {
-              //  $table->foreign('user_id')->references('id')->on('users');
+                //  $table->foreign('user_id')->references('id')->on('users');
             });
         }
 
@@ -57,7 +57,7 @@ class Members extends Migration
             });
 
             Schema::table('member_dependents', function (Blueprint $table) {
-              //  $table->foreign('member_id')->references('id')->on('members');
+                //  $table->foreign('member_id')->references('id')->on('members');
             });
         }
     }

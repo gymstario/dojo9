@@ -46,10 +46,9 @@ class PlanService
         ];
     }
 
-    public static function save($name, $interval, $product, $interval_count, $amount, $data, $stripeAccountId, $stripeId = null)
+    public static function save($name, $interval, $product, $interval_count, $amount, $data, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
-            'name' => $name,
             'nickname' => $name,
             'currency' => 'USD',
             'interval' => $interval,

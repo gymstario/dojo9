@@ -33,15 +33,14 @@ class ProductService
         ];
     }
 
-    public static function save($id, $name, $email, $stripeAccountId = '', $stripeId = null)
+    public static function save($id, $name, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             'name' => $name,
-            'email' => $email,
             'description' => $id,
         ];
         if ($stripeId == null || $stripeId == '') {
-            if ($stripeAccountId === '') {
+            if ($stripeAccountId === null) {
                 $product = Product::create($data);
             } else {
                 $product = Product::create($data, ["stripe_account" => $stripeAccountId]);
