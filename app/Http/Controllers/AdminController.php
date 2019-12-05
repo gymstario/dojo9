@@ -3,33 +3,51 @@
 namespace App\Http\Controllers;
 
 use bitspro\StripeMarketplace\StripeMarketplaceManager;
+use App\Http\Models\Plan;
+use App\Http\Models\Product;
 
-class HomeController extends Controller
+class AdminController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    private $objStripManager = null;
+
     public function __construct()
     {
-        $this->middleware('auth');
-        $obj = new StripeMarketplaceManager();
-        // $this->middleware('auth:api')
-
-        // ToDo: If you want to redo the authentication
-        // $this->middleware(['auth', 'password.confirm']);
-        // $this->middleware('verified');
+        // $this->middleware('auth');
+        $this->objStripManager = new StripeMarketplaceManager();
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function setup()
     {
-        // Gate::allows('is-admin')
-        return view('home');
+        $productId = $this->objStripManager->Product->save('Dojo', 'service');
+        $product = new Product;
+        $product->stripe_id = $productId;
+        $product->save();
+        $planId = $this->objStripManager->Plan->save('Dojo Plan 1', 'month', $productId, 1, 20000, [
+            "Branches" => 1,
+            "Classes" => 5,
+            "Students" => -1,
+        ]);
+        $plan = new Plan;
+        $plan->stripe_id = $planId;
+        $plan->save();
+
+        $planId = $this->objStripManager->Plan->save('Dojo Plan 2', 'month', $productId, 1, 30000, [
+            "Branches" => 5,
+            "Classes" => 50,
+            "Students" => -1,
+        ]);
+        $plan = new Plan;
+        $plan->stripe_id = $planId;
+        $plan->save();
+
+        $planId = $this->objStripManager->Plan->save('Dojo Plan 2', 'month', $productId, 1, 50000, [
+            "Branches" => -1,
+            "Classes" => -1,
+            "Students" => -1,
+        ]);
+        $plan = new Plan;
+        $plan->stripe_id = $planId;
+        $plan->save();
+
     }
 }

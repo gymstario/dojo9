@@ -14,6 +14,9 @@
 Auth::routes(['verify' => true]);
 Route::get("/plans", ["as" => "auth.plans.get", "uses" => "Auth\PlanController@getPlans"]);
 
+Route::get("admin/setup", ["as" => "admin.setup.get", "uses" => "AdminController@setup"]);
+
+
 Route::get('/', function () {
     return view('welcome');
 });

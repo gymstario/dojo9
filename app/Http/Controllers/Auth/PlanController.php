@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use bitspro\StripeMarketplace\StripeMarketplaceManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Models\Plan;
+use App\Http\Models\Product;
 
 class PlanController extends Controller
 {
     private $objStripManager = null;
     public function __construct()
     {
-        $this->objStripManager = new StripeMarketplaceManager();
     }
 
     /**
@@ -22,8 +22,7 @@ class PlanController extends Controller
 
     public function getPlans()
     {
-        $data = $this->objStripManager->Plan->getAll();
-        dd($data);
-        return view("auth.plans");
+        $plans = Plan::getAdminPlans();
+        return view("auth.plans", ["plans" => $plans]);
     }
 }

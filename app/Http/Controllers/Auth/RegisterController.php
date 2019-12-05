@@ -50,9 +50,12 @@ class RegisterController extends Controller
     {
         // ToDo: Further validation for registered users.
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'stripeToken' => ['required', 'string', 'min:8'],
+            'plan' => ['required']
         ]);
     }
 
@@ -65,10 +68,6 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // ToDo: Update user creation method with different types of users.
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return User::create($data);
     }
 }

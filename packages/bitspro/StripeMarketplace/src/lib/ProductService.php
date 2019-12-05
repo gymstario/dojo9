@@ -25,7 +25,6 @@ class ProductService
             $return[] = [
                 'name' => $product['name'],
                 'type' => $product['type'],
-                'description' => $product['description'],
             ];
         }
         return $return;
@@ -37,15 +36,14 @@ class ProductService
         return [
             'name' => $product['name'],
             'type' => $product['type'],
-            'description' => $product['description'],
         ];
     }
 
-    public static function save($id, $name, $stripeAccountId = null, $stripeId = null)
+    public static function save($name, $type, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             'name' => $name,
-            'description' => $id,
+            'type' => $type,
         ];
         if ($stripeId == null || $stripeId == '') {
             if ($stripeAccountId === null) {
