@@ -9,7 +9,7 @@
                     <div class="col-12">
                         <h1 class="display-4 mb-10 text-center">Sign Up</h1>
                     </div>
-                    <input type="hidden" name="plan" value="{{ $_GET["plan"] }}" />
+                    <input type="hidden" name="plan" value="{{ isset($_GET["plan"]) ? $_GET["plan"] : '' }}" />
                     {!! field_wrap($errors, "First Name", "firstName", "", [], "col-6") !!}
                     {!! field_wrap($errors, "Last Name", "lastName", "", [], "col-6") !!}
                     {!! field_wrap($errors, "Email Address", "email", "email", [], "col-12") !!}
