@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
-        foreach (config('roles') as $role) {
+        foreach (config('roles') as $role => $name) {
             Gate::define('is-' . $role, function ($user) {
                 return $user->role == $role;
             });

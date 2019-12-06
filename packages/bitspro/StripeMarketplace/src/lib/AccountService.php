@@ -2,35 +2,46 @@
 
 namespace bitspro\StripeMarketplace\lib;
 
+use Illuminate\Support\Facades\Log;
 use Stripe\Account;
 
 class AccountService
 {
     public static function getAll($limit = 100)
     {
-        $options = [
-            'limit' => $limit,
-        ];
-        $accounts = Account::all($options);
-        $return = [];
-        foreach ($accounts as $account) {
-            $return[] = [
-                'id' => $account['id'],
-                'business_type' => $account['business_type'],
-                'business_profile' => $account['business_profile'],
-                'capabilities' => $account['capabilities'],
-                'created' => $account['created'],
-                'email' => $account['email'],
-                'external_accounts' => $account['external_accounts'],
-                'type' => $account['type'],
+        try {
+            $options = [
+                'limit' => $limit,
             ];
+            $accounts = Account::all($options);
+            $return = [];
+            foreach ($accounts as $account) {
+                $return[] = [
+                    'id' => $account['id'],
+                    'business_type' => $account['business_type'],
+                    'business_profile' => $account['business_profile'],
+                    'capabilities' => $account['capabilities'],
+                    'created' => $account['created'],
+                    'email' => $account['email'],
+                    'external_accounts' => $account['external_accounts'],
+                    'type' => $account['type'],
+                ];
+            }
+            return $return;
+        } catch (\Exception $e) {
+            Log::error($e);
         }
-        return $return;
+        return false;
     }
 
     public static function get($id)
     {
-        return Account::retrieve($id);
+        try {
+            return Account::retrieve($id);
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+        return false;
     }
 
     public static function save(
@@ -44,51 +55,53 @@ class AccountService
         $business = null,
         $ip = null,
         $ssn = null,
-        $stripeId = null) {
+        $stripeId = null
+    ) {
+        try {
 
-        $data = [
-            'type' => 'custom',
-            'country' => 'US',
-            'email' => $email,
-            'requested_capabilities' => [
-                'card_payments',
-                'transfers',
-            ],
-            "business_type" => $type,
-            "tos_acceptance" => [
-                "date" => 1547923073,
-                "ip" => "172.18.80.19",
-            ],
-            /* "external_account" => [
+            $data = [
+                'type' => 'custom',
+                'country' => 'US',
+                'email' => $email,
+                'requested_capabilities' => [
+                    'card_payments',
+                    'transfers',
+                ],
+                "business_type" => $type,
+                "tos_acceptance" => [
+                    "date" => 1547923073,
+                    "ip" => "172.18.80.19",
+                ],
+                /* "external_account" => [
             "object" => "bank_account",
             "country" => 'US',
             "currency" => "usd",
             "routing_number" => "110000000",
             "account_number" => "000123456789",
             ], */
-            "business_profile" => [
-                "mcc" => $mcc,
-                "name" => $business,
-                "support_email" => "riz@bitspro.com",
-                "support_phone" => $phone,
-                "url" => "https://www.bitspro.com",
-            ],
-            "company" => [
-                "tax_id" => "000000000",
-                "address" => [
-                    "country" => "US",
-                    "line1" => "123 State St",
-                    "city" => "Schenectady",
-                    "state" => "NY",
-                    "postal_code" => 12345,
+                "business_profile" => [
+                    "mcc" => $mcc,
+                    "name" => $business,
+                    "support_email" => "riz@bitspro.com",
+                    "support_phone" => $phone,
+                    "url" => "https://www.bitspro.com",
                 ],
-                "name" => "The Best Cookie Co",
-                "phone" => $phone,
-                "tax_id" => 000000000,
-            ],
-        ];
+                "company" => [
+                    "tax_id" => "000000000",
+                    "address" => [
+                        "country" => "US",
+                        "line1" => "123 State St",
+                        "city" => "Schenectady",
+                        "state" => "NY",
+                        "postal_code" => 12345,
+                    ],
+                    "name" => "The Best Cookie Co",
+                    "phone" => $phone,
+                    "tax_id" => 000000000,
+                ],
+            ];
 
-        /* if ($type === 'company') {
+            /* if ($type === 'company') {
         $data["business_profile"] = [
         "mcc" => $mcc,
         "name" => $business,
@@ -137,62 +150,62 @@ class AccountService
         ];
         } */
 
-        if ($stripeId == null || $stripeId == '') {
-            $account = Account::create($data);
-        } else {
-            $account = Account::update($stripeId, $data);
-        }
+            if ($stripeId == null || $stripeId == '') {
+                $account = Account::create($data);
+            } else {
+                $account = Account::update($stripeId, $data);
+            }
 
-        Account::createPerson($account['id'], [
-            "first_name" => "Jenny",
-            "last_name" => "Rosen",
-            "relationship" => [
-                "representative" => true,
-                "executive" => true,
-                "title" => "CEO",
-            ],
-            "address" => [
-                "country" => "US",
-                "line1" => "123 State St",
-                "city" => "Schenectady",
-                "state" => "NY",
-                "postal_code" => 12345,
-            ],
-            "dob" => [
-                "day" => 10,
-                "month" => 11,
-                "year" => 1980,
-            ],
-            "id_number" => "000000000",
-            "phone" => $phone,
-            "email" => "jenny@cookies.com",
-        ]);
+            Account::createPerson($account['id'], [
+                "first_name" => "Jenny",
+                "last_name" => "Rosen",
+                "relationship" => [
+                    "representative" => true,
+                    "executive" => true,
+                    "title" => "CEO",
+                ],
+                "address" => [
+                    "country" => "US",
+                    "line1" => "123 State St",
+                    "city" => "Schenectady",
+                    "state" => "NY",
+                    "postal_code" => 12345,
+                ],
+                "dob" => [
+                    "day" => 10,
+                    "month" => 11,
+                    "year" => 1980,
+                ],
+                "id_number" => "000000000",
+                "phone" => $phone,
+                "email" => "jenny@cookies.com",
+            ]);
 
-        Account::createPerson($account['id'], [
-            "first_name" => "Kathleen",
-            "last_name" => "Banks",
-            "relationship" => [
-                "owner" => true,
-                "percent_ownership" => 100,
-            ],
-            "address" => [
-                "country" => "US",
-                "line1" => "123 State St",
-                "city" => "Schenectady",
-                "state" => "NY",
-                "postal_code" => 12345,
-            ],
-            "dob" => [
-                "day" => 10,
-                "month" => 11,
-                "year" => 1980,
-            ],
-            "id_number" => "000000000",
-            "phone" => $phone,
-            "email" => "jenny@cookies.com",
-        ]);
+            Account::createPerson($account['id'], [
+                "first_name" => "Kathleen",
+                "last_name" => "Banks",
+                "relationship" => [
+                    "owner" => true,
+                    "percent_ownership" => 100,
+                ],
+                "address" => [
+                    "country" => "US",
+                    "line1" => "123 State St",
+                    "city" => "Schenectady",
+                    "state" => "NY",
+                    "postal_code" => 12345,
+                ],
+                "dob" => [
+                    "day" => 10,
+                    "month" => 11,
+                    "year" => 1980,
+                ],
+                "id_number" => "000000000",
+                "phone" => $phone,
+                "email" => "jenny@cookies.com",
+            ]);
 
-        /* Account::createPerson($account['id'], [
+            /* Account::createPerson($account['id'], [
         "first_name" => "Kathleena",
         "last_name" => "Banks",
         "relationship" => [
@@ -215,8 +228,11 @@ class AccountService
         "email" => "jennya@cookies.com",
         ]); */
 
-        return $account['id'];
-
+            return $account['id'] !== '' && $account['id'] !== null ? $account['id'] : false;
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+        return false;
     }
 
     public static function delete($id)

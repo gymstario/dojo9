@@ -1,49 +1,28 @@
-@extends('layouts.app')
-
+@extends('layouts.frontend')
+@section('title', 'Reset Password')
+@section('menu', 'login')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
-
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div class="rui-sign align-items-center justify-content-center">
+    {!! unload_messages() !!}
+    <br />
+    <div class="bg-image">
+        <div class="bg-grey-1"></div>
+    </div>
+    {{ Form::open(["route" => "password.confirm", "class" => "form rui-sign-form rui-sign-form-cloud"]) }}
+        <div class="row vertical-gap sm-gap justify-content-center">
+            <div class="col-12">
+                <h1 class="display-4 mb-10 text-center">Confirm Password</h1>
+                <p>Please confirm your password before continuing.</p>
+            </div>
+            {!! field_wrap($errors, "Password", "password", "password", [], "col-12") !!}
+            {!! field_wrap($errors, "Confirm Password", "password_confirmation", "password", [], "col-12") !!}
+            <div class="col-12">
+                <button type="submit" class="btn btn-brand btn-block text-center">Confirm Password</button>
             </div>
         </div>
+    {{ Form::close() }}
+    <div class="mt-20 text-grey-5">
+        <a href="{{ route("password.request") }}" class="text-2">Forgot Your Password</a>
     </div>
 </div>
 @endsection

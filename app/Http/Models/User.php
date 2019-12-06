@@ -5,6 +5,8 @@ namespace App\Http\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use bitspro\StripeMarketplace\StripeMarketplaceManager;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'role', 'strip_customer_id'
     ];
 
     /**
@@ -37,7 +39,51 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function member(){
-		return $this->hasOne('App\Models\Member');
-	}
+    public function member()
+    {
+        return $this->hasOne('App\Models\Member');
+    }
+
+    public function isValidSubscription()
+    {
+        $objStripe = new StripeMarketplaceManager();
+        $customer = $objStripe->Customer->get($this->strip_customer_id);
+        $negative = '';
+        if (count($customer['subscriptions']) > 0) {
+            foreach ($customer['subscriptions'] as $subscription) {
+                if ($subscription->status === 'active') {
+                    return true;
+                } else {
+                    $negative .= $subscription->status . ' ';
+                }
+            }
+        }
+        return $negative;
+    }
+
+    public static function add($data)
+    {
+        $objStripe = new StripeMarketplaceManager();
+        $customerId = $objStripe->Customer->save($data['firstName'] . ' ' . $data['lastName'], $data['email'], $data['stripeToken']);
+        if ($customerId !== false) {
+            $objUser = User::create([
+                'first_name' => $data['firstName'],
+                'last_name' => $data['lastName'],
+                'email' => $data['email'],
+                'strip_customer_id' => $customerId,
+                'password' => bcrypt($data['password']),
+                'role' => $data['role'],
+            ]);
+            $planId = $data['plan'];
+            $subscriptionId = Subscription::add([
+                'customerId' => $customerId,
+                'planId' => $planId,
+                'userId' => $objUser->id,
+            ]);
+            if ($subscriptionId !== false) {
+                return $objUser;
+            }
+        }
+        return false;
+    }
 }

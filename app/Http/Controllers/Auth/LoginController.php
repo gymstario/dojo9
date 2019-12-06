@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use bitspro\StripeMarketplace\StripeMarketplaceManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-
-    public function __construct()
+    protected function validator(array $data)
     {
-        $ob = new StripeMarketplaceManager();
+        // ToDo: Further validation for registered users.
+        return Validator::make($data, [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 
     /**
@@ -22,20 +25,19 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function authenticate(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
-        // ToDo: Add other parameter to verify user.
-        // $credentials = array_merge($credentials, ['active' => 1]);
-
-        // if only allow admin then Auth::guard('admin')->attemp($credentials, $remember);
-        if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            // Auth::loginUsingId(1);
-            // Auth::login($user, true);
-            return redirect()->intended('dashboard');
+        $remember = $request->get('remember');
+        if (Auth::viaRemember() || Auth::attempt($credentials, $remember === 'on')) {
+            $status = Auth::user()->isValidSubscription();
+            if ($status === true) {
+                return redirect()->intended('home');
+            } else {
+                return redirect()->back()->withInput()->with(['error' => 'Your subscription has ' . $status]);
+            }
         }
+        return redirect()->back()->withInput()->with(['error' => 'Please enter correct combination of email and password.']);
     }
 
     /**
@@ -54,5 +56,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+        return redirect()->route('login');
     }
 }

@@ -16,14 +16,14 @@ class Subscriptions extends Migration
         if (!Schema::hasTable('subscriptions')) {
             Schema::create('subscriptions', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('member_id');
+                $table->integer('user_id');
                 $table->string('stripe_subscription_id');
                 $table->timestamps();
                 $table->softDeletes();
             });
 
             Schema::table('subscriptions', function (Blueprint $table) {
-              ///  $table->foreign('member_id')->references('id')->on('members'); // hasMany
+                ///  $table->foreign('user_id')->references('id')->on('users'); // hasMany
             });
         }
     }

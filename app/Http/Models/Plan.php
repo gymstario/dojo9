@@ -10,24 +10,20 @@ class Plan extends Model
     //
     protected $table = 'plans';
 
-    public static function getAdminPlans() {
+    public static function getAdminPlans()
+    {
         $output = [];
-        $planIds = Plan::all();
-        $objStripe = new StripeMarketplaceManager();
-        foreach($planIds as $planId) {
-            $plan = $objStripe->Plan->get($planId->stripe_id);
-            $output[] = [
-                "id" => $planId->id,
-                "stripeId" => encrypt($planId->stripe_id),
-                "name" => $plan["nickname"],
-                "interval_count" => $plan["interval_count"],
-                "active" => $plan["active"],
-                "amount" => $plan["amount"] / 100,
-                "currency" => $plan["currency"],
-                "interval" => $plan["interval"],
-                "attributes" => json_decode(json_encode($plan["metadata"]), true),
-            ];
+        $plans = Plan::all();
+        if (count($plans) > 0) {
+            $objStripe = new StripeMarketplaceManager();
+            foreach ($plans as $plan) {
+                $stripePlan = $objStripe->Plan->get($plan->stripe_id);
+                if ($stripePlan !== false) {
+                    $output[] = array_merge(['role' => $plan->role], $stripePlan);
+                }
+            }
+            return $output;
         }
-        return $output;
+        return [];
     }
 }

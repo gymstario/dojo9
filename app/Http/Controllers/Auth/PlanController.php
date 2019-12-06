@@ -12,8 +12,7 @@ class PlanController extends Controller
 {
     private $objStripManager = null;
     public function __construct()
-    {
-    }
+    { }
 
     /**
      * Handle plans form display

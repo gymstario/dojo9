@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -55,7 +54,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'stripeToken' => ['required', 'string', 'min:8'],
-            'plan' => ['required']
+            'plan' => ['required'],
+            'role' => ['required'],
         ]);
     }
 
@@ -63,11 +63,14 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\Http\Models\User
      */
     protected function create(array $data)
     {
-        // ToDo: Update user creation method with different types of users.
-        return User::create($data);
+        $objUser = User::add($data);
+        if ($objUser !== false) {
+            return $objUser;
+        }
+        return null;
     }
 }

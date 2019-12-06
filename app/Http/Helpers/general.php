@@ -1,4 +1,5 @@
 <?php
+
 /**
  * If form is submitted uses POST while uses Array data if not submitted
  *
@@ -56,7 +57,6 @@ function unload_message_login($errors)
                 </div>";
         return $messages;
     }
-
 }
 
 /**
@@ -64,26 +64,16 @@ function unload_message_login($errors)
  *
  * @return string
  */
-function unload_messages($paypal = false, $nolocation = false)
+function unload_messages()
 {
-    if ($nolocation == true) {
-        if (session("msgInfo") == "") {
-            session(["msgInfo" => ["status" => "success", "message" => trans("messages.nolocationCreated")]]);
-        }
-    } elseif ($paypal == true) {
-        if (session("msgInfo") == "") {
-            session(["msgInfo" => ["status" => "error", "message" => trans("messages.paypalSetupNeeded")]]);
-        }
-    } else {
-        session()->forget('msgInfo');
-    }
-
-    if (session("info") != "") {
-        return render_message(session("info"));
-    }
-
-    if (session("msgInfo") != "") {
-        return render_message(session("msgInfo"));
+    if (session('success') !== null) {
+        return '<div class="alert alert-success" role="alert">' . session('success') . '</div>';
+    } else if (session('error') !== null) {
+        return '<div class="alert alert-danger" role="alert">' . session('error') . '</div>';
+    } else if (session('resent') !== null) {
+        return '<div class="alert alert-success" role="alert">A fresh verification link has been sent to your email address.</div>';
+    } else if (session('status') !== null) {
+        return '<div class="alert alert-success" role="alert">' . session('status') . '</div>';
     }
 }
 
@@ -479,7 +469,7 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
     return '
     <div class="' . $class . ($errors->has($name) ? " has-danger" : "") . '">
         ' . ($label != '' ? '<label class="form-control-label">' . $label . '</label>' : '') .
-    $input . '
+        $input . '
         <div class="form-control-feedback">' . $errors->first($name) . '</div>
     </div>';
 }
@@ -523,7 +513,7 @@ function field_wrap_edit($data, $dataName, $errors, $label, $name, $type = "", $
 
     <div class="form-group ' . $class . ($errors->has($name) ? " has-danger" : "") . '">
         ' .
-    $input . '
+        $input . '
         <div class="form-control-feedback">' . $errors->first($name) . '</div>
     </div>';
 }

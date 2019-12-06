@@ -21,7 +21,7 @@
                         @endforeach
                     </ul>
                     <div class="pricing-footer">
-                        <a href="{{ route("register") }}?plan={{ $plan["stripeId"] }}" class="btn btn-default btn-lg">BUY <i class="glyphicon glyphicon-play-circle"></i></a>
+                    <a href="{{ route("register") }}?plan={{ $plan["stripeId"] }}&role={{ $plan["role"] }}" class="btn btn-default btn-lg">BUY <i class="glyphicon glyphicon-play-circle"></i></a>
                     </div>
                 </div>
             </div>

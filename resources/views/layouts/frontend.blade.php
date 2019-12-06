@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@section('title') | {{ env('APP_NAME') }}</title>
+    <title>@yield('title') | {{ env('APP_NAME') }}</title>
 
     <meta name="description" content="RootUI - clean and powerful solution for your Dashboards, Administration areas.">
     <meta name="keywords" content="admin, dashboard, template, react, reactjs, html, jquery, clean">
@@ -61,10 +61,9 @@
 
 
     <div class="rui-main">
-    <main>
+        <main>
             @yield('content')
         </main>
-
     </div>
 
 

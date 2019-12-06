@@ -19,6 +19,10 @@ class StripUserId extends Migration
                 ->nullable()
                 ->default(null);
         });
+
+        Schema::table('plans', function ($table) {
+            $table->string('role')->after('stripe_id')->default('student');
+        });
     }
 
     /**
@@ -31,6 +35,10 @@ class StripUserId extends Migration
         //
         Schema::table('users', function ($table) {
             $table->dropColumn('strip_customer_id');
+        });
+
+        Schema::table('plans', function ($table) {
+            $table->dropColumn('role');
         });
     }
 }

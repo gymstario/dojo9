@@ -1,20 +1,24 @@
 @extends('layouts.frontend')
-
+@section('title', 'Register')
+@section('menu', 'register')
 @section('content')
 <div class="rui-sign">
     <div class="row w-100" style="margin-left: 0; margin-right: 0;">
         <div class="col-lg-6 d-flex align-items-center justify-content-center">
             {{ Form::open(["id" => "payment-form", "class" => "form rui-sign-form", "style" => "min-width: 600px"]) }}
                 <div class="row vertical-gap sm-gap justify-content-center">
+                    {!! unload_messages() !!}
+                    <br />
                     <div class="col-12">
                         <h1 class="display-4 mb-10 text-center">Sign Up</h1>
                     </div>
                     <input type="hidden" name="plan" value="{{ isset($_GET["plan"]) ? $_GET["plan"] : '' }}" />
+                    <input type="hidden" name="role" value="{{ isset($_GET["role"]) ? $_GET["role"] : '' }}" />
                     {!! field_wrap($errors, "First Name", "firstName", "", [], "col-6") !!}
                     {!! field_wrap($errors, "Last Name", "lastName", "", [], "col-6") !!}
                     {!! field_wrap($errors, "Email Address", "email", "email", [], "col-12") !!}
                     {!! field_wrap($errors, "Password", "password", "password", [], "col-6") !!}
-                    {!! field_wrap($errors, "Confirm Password", "password_confirmation", "email", [], "col-6") !!}
+                    {!! field_wrap($errors, "Confirm Password", "password_confirmation", "password", [], "col-6") !!}
                     <div class="col-12">
                         <label class="form-control-label">Payment Information</label>
                         <div id="card-element"></div>

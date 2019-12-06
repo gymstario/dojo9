@@ -1,28 +1,23 @@
-@extends('layouts.app')
-
+@extends('layouts.frontend')
+@section('title', 'Login')
+@section('menu', 'login')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
-            </div>
+<div class="rui-sign align-items-center justify-content-center">
+    {!! unload_messages() !!}
+    <br />
+    <div class="bg-image">
+        <div class="bg-grey-1"></div>
+    </div>
+    <div class="row vertical-gap sm-gap justify-content-center">
+        <div class="col-12">
+            <h1 class="display-4 mb-10 text-center">Verify Your Email Address</h1>
         </div>
+        {{ __('Before proceeding, please check your email for a verification link.') }}
+        {{ __('If you did not receive the email') }},
+        {{ Form::open(["route" => "verification.resend"]) }}
+        <div class="col-12">
+            <button type="submit" class="btn btn-brand btn-block text-center">Click here to request another</button>
+        </div>
+        {{ Form::close() }}
     </div>
 </div>
-@endsection

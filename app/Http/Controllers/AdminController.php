@@ -29,6 +29,7 @@ class AdminController extends Controller
         ]);
         $plan = new Plan;
         $plan->stripe_id = $planId;
+        $plan->role = 'owner';
         $plan->save();
 
         $planId = $this->objStripManager->Plan->save('Dojo Plan 2', 'month', $productId, 1, 30000, [
@@ -37,6 +38,7 @@ class AdminController extends Controller
             "Students" => -1,
         ]);
         $plan = new Plan;
+        $plan->role = 'owner';
         $plan->stripe_id = $planId;
         $plan->save();
 
@@ -46,8 +48,8 @@ class AdminController extends Controller
             "Students" => -1,
         ]);
         $plan = new Plan;
+        $plan->role = 'owner';
         $plan->stripe_id = $planId;
         $plan->save();
-
     }
 }
