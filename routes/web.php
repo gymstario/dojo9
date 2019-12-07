@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', ['as' => 'dashboard.get', 'uses' => 'HomeController@index']);
+Route::get('/members', ['as' => 'members.list', 'uses' => 'MemberController@index']);
+Route::get('/members', ['as' => 'payments.list', 'uses' => 'MemberController@index']);
+Route::get('/members', ['as' => 'plans.list', 'uses' => 'MemberController@index']);
+Route::get('/members', ['as' => 'settings.get', 'uses' => 'MemberController@index']);
 
 // Route::get("/business/setup", ["as" => "auth.business.setup.get", "uses" => "CommerceController@getAgencyRequest"]);

@@ -106,6 +106,269 @@
   Demo
 
  -------------------------------------------------------------------*/
+ /***************my css*******************/
+ .switch-set{
+     padding-left: 10px;
+ }
+ .set-add{
+     font-size: 16px;
+ }
+ .add-button{
+    font-size: 32px;
+    margin-top: 10px;
+    margin-left: 30px;
+ }
+ .table-user{
+     font-size: 20px !important;
+ }
+ .user-name{
+    margin-top: 10px;
+    margin-right: 10px;
+ }
+ .user-img{
+     font-size: 20px;
+ }
+ .set-mail{
+     font-size: 14px;
+     margin-right: 5px;
+     
+ }
+ .email-text{
+     font-size: 14px;
+ }
+ .set-title{
+     font-size: 16px !important;
+ }
+ .media-color{
+     padding: 10px;
+ }
+ .set-mails{
+    margin-left: 5px;
+    margin-right: 5px;  
+ }
+ .rank{
+     width: 430px;
+     height: 70px;
+     background: #f8f9fa;
+     margin-right: 15px;
+ }
+ .set-certificate{
+     font-size: 20px;
+     margin-top: 25px;
+     margin-left: 10px;
+ }
+ .icon-div{
+     width: 30px;
+     float: left;
+ }
+ .set-rank{
+    width: 40px;
+    float: left;
+    font-size: 14px;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 8px;
+   
+ }
+ .adv-blue{
+    width: 50px;
+    font-size: 12px;
+    margin-left: 42px;
+ }
+ .adv-num{
+    width: 50px;
+    font-size: 12px;
+    margin-left: 38px;
+    padding-left: 4px;
+ }
+ .certificate-area{
+     width: 100px;
+     float: left;
+     margin-left: 20px;
+     margin-right: 20px;
+ }
+ .circle-image{
+   border-radius: 0px !important;
+ }
+ .set-pagintion{
+      background: #f8f9fa;
+      margin-top: 20px;
+      width: 90%;
+      margin: auto;
+      margin-top: 20px;
+ }
+ .pegition-control{
+   width: 100px;
+   margin-top: 5px;
+ }
+ .record{
+  font-size: 12px;
+  margin-top: 12px;
+  margin-left: 10px;
+  color: #000;
+ }
+ .pagination-btn{
+  margin-left: 53px !important;
+ }
+ .total-member{
+  font-size: 14px;
+  margin-left: 10px;
+ }
+ .member-heading{
+    float: left;
+    width: 20%;
+ }
+ .set-search-input{
+   width: 200px;
+   float: left;
+   margin-top: 6px;
+ }
+ .set-icon-input{
+  position: relative;
+  z-index: 1;
+  right: 26px;
+  top: 14px;
+  font-size: 15px;
+ }
+ .btn-property{
+  float: right;
+  margin-top: -16px;
+ }
+ .set-profile{
+   font-weight: 600;
+   font-size: 20px;
+   color: #000;
+ }
+ .geneder-inpt{
+   width: 50%;
+   
+ }
+ .set-form{
+   margin-top: 50px;
+ }
+.set-col{
+  float: left;
+}
+.col-margin-set{
+  margin-top: 20px;
+}
+.cancle{
+  text-decoration: underline;
+  margin-left: 10px;
+}
+.footer-btn{
+  margin-top: 20px;
+  margin-right: 40px;
+}
+.zip-feild{
+  width: 40%;
+  position: relative;
+  top: -36px;
+  left: 292px;
+  z-index: 1;
+}
+.payment{
+  margin-left: 20px;
+  margin-top: 20px;
+  color: #000;
+}
+.payment-card{
+  font-size: 20px;
+  margin-left: 20px;
+}
+.col-setting{
+  margin-left: 20px;
+  margin-top: 10px;
+  float: left;
+}
+.set-year{
+  margin-top: 30px;
+}
+.payment-card-1{
+  margin-top: 30px !important;
+  margin-left: 22px;
+  font-size: 20px;
+}
+.bg-div{
+  padding: 20px;
+  background: #6c757d;
+}
+.image-div{
+  width: 100px !important;
+  height: 100px !important;
+  background: #f8f9fa;
+  display: inline-block;
+}
+.circle-image-1{
+  border-radius: 0px !important;
+  flex: 0 0 100px !important;
+  height: 100px !important;
+}
+.main-title{
+  font-size: 16px !important;
+  font-weight: 500;
+  color: #fff !important;
+
+}
+.subtitle-set{
+  font-size: 14px;
+  color: #fff !important;
+}
+.plan-price{
+    color: #fff;
+    font-size: 11px;
+    margin-top: 10px;
+}
+.duration{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+.month-set{
+  color: #fff;
+  font-size: 12px;
+  margin-top: -20px;
+}
+.set-body{
+  margin-left: 25px !important;
+}
+.body-success{
+  margin-top: 40px;
+}
+.set-dot{
+  float: right;
+}
+.col-floting-set{
+  float: left;
+  margin-bottom: 30px;
+}
+.set-pricing{
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+}
+.set-add-button{
+  font-size: 18px;
+}
+.col-term{
+  margin-top: -20px;
+}
+.term-month{
+  font-size: 14px;
+  margin-top: 46px;
+  color: #000;
+}
+.image-user{
+  width: 200px;
+    height: 200px;
+    background: #f8f9fa;
+    margin-top: 84px;
+}
+.close{
+    margin-right: 10px;
+    margin-top: 10px;
+}
+ /***************my css*******************/
 .demo > .card,
 .demo > .list-group {
     display: inline-block;
@@ -7709,9 +7972,9 @@ h6,
             box-shadow: 0 0 0 2px #f8f9fa;
 }
 
-.btn-custom-round:hover::after, .btn-custom-round.hover::after {
+/* .btn-custom-round:hover::after, .btn-custom-round.hover::after {
     background-color: #f8f9fa;
-}
+} */
 
 .btn-custom-round:not(.disabled):not(:disabled):active {
     color: #393f49;
@@ -9378,11 +9641,11 @@ textarea.form-control {
             box-shadow: 0 0 0 2px #fff;
 }
 
-.media.media-success .media-img::before {
+/* .media.media-success .media-img::before {
     background-color: #2fc787;
     -webkit-box-shadow: 0 0 0 2px #fff;
             box-shadow: 0 0 0 2px #fff;
-}
+} */
 
 .media.media-danger .media-img::before {
     background-color: #ef5164;
@@ -9544,7 +9807,7 @@ textarea.form-control {
 .media > .media-link:hover > .media-img,
 .media > .media-link.hover > .media-img {
     color: #bcbec0;
-    background-color: #f3f4f7;
+        
 }
 
 .media:hover > .media-img > img, .media.hover > .media-img > img,
@@ -9561,6 +9824,7 @@ textarea.form-control {
 .media > .media-link:focus,
 .media > .media-link.focus {
     text-decoration: none;
+   
 }
 
 .media-country .media-img {

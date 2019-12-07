@@ -77,6 +77,22 @@ function unload_messages()
     }
 }
 
+function unload_toast()
+{
+    return '<div class="toast rui-toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="8000" data-toast-show-on-startup="true">
+    <div class="toast-header">
+        <h5 class="mr-auto mnb-2">RootUI</h5>
+        <small class="toast-date">15 minutes ago</small>
+        <button type="button" class="ml-15 mnt-4 mnr-4 toast-close close" data-dismiss="toast" aria-label="Close">
+            <span data-feather="x" class="rui-icon rui-icon-stroke-1_5"></span>
+        </button>
+    </div>
+    <div class="toast-body">
+        Hey, this is a demo notice. Click on the close button if you don\'t want to see it again.
+    </div>
+</div>';
+}
+
 function render_message($info)
 {
     if (isset($info["status"])) {

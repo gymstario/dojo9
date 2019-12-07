@@ -43,42 +43,50 @@
 </head>
 
 
-<body>
-    <div class="rui-page-preloader" role="status">
-    <div class="rui-page-preloader-inner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
+<body data-spy="scroll" data-target=".rui-page-sidebar" data-offset="140" class="rui-no-transition rui-navbar-autohide rui-section-lines">
+        <div class="rui-page-preloader" role="status">
+                <div class="rui-page-preloader-inner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+    @auth
+            @include('layouts.sidebar')
+            @include('layouts.topbar')
+        @endauth
+
+        <div class="rui-page content-wrap">
+        <div class="rui-main">
+                <main>
+                    @yield('content')
+                </main>
+            </div>
+
+
+
+
+
+
+
+
+        @auth
+        @include('layouts.footer')
+    @endauth
 </div>
-
-
-    <div class="rui-main">
-        <main>
-            @yield('content')
-        </main>
-    </div>
-
-
-
-    <!-- START: Scripts -->
-
-<!-- Vendor -->
+</div>
 <script src="{{ asset('assets/js/vendor.js') }}"></script>
-
-<!-- RootUI -->
 <script src="{{ asset('assets/js/rootui.js') }}"></script>
 <script src="{{ asset('assets/js/rootui-init.js') }}"></script>
-<!-- END: Scripts -->
-
 @yield('js')
-
 </body>
 </html>
+
+

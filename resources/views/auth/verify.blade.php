@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('layouts.main')
 @section('title', 'Login')
 @section('menu', 'login')
 @section('content')
