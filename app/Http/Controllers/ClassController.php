@@ -32,14 +32,8 @@ class ClassController extends Controller
      * @param  ClassRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClassRequest $request)
-    {
-        $class = Class::create([
-            'start' => $request->start,
-            'end' => $request->end,
-            'days' => $request->days
-        ]);
-    }
+    public function store()
+    { }
 
     /**
      * Display the specified resource.
