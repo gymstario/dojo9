@@ -2,34 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 // use bitspro\StripeMarketplace\StripeMarketplaceManager;
 
 class OwnerController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $obj = new StripeMarketplaceManager();
-        // $this->middleware('auth:api')
-
-        // ToDo: If you want to redo the authentication
-        // $this->middleware(['auth', 'password.confirm']);
-        // $this->middleware('verified');
+        $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    public function dashboard()
+    {
+        if (!Gate::allows('is-owner')) {
+            return redirect('401');
+        }
+        return view('owner.dashboard');
+    }
+
     public function setup()
     {
-        // Gate::allows('is-admin')
-        return view('home');
+        if (!Gate::allows('is-owner')) {
+            return redirect('401');
+        }
+        return view('owner.setup');
+    }
+
+    public function setting()
+    {
+        if (!Gate::allows('is-owner')) {
+            return redirect('401');
+        }
+        return view('owner.setting');
     }
 }

@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Members;
+use App\Http\Models\Member;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Http\Requests\MemberCreateRequest;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        if (!Gate::allows('is-owner')) {
+            return redirect('401');
+        }
         return view('members.list');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -63,7 +62,7 @@ class MemberController extends Controller
      * @param  \App\Members  $members
      * @return \Illuminate\Http\Response
      */
-    public function show(Members $members)
+    public function show()
     {
         //
     }
@@ -74,7 +73,7 @@ class MemberController extends Controller
      * @param  \App\Members  $members
      * @return \Illuminate\Http\Response
      */
-    public function edit(Members $members)
+    public function edit()
     {
         //
     }
@@ -86,7 +85,7 @@ class MemberController extends Controller
      * @param  \App\Members  $members
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Members $members)
+    public function update(Request $request)
     {
         //
     }
@@ -97,7 +96,7 @@ class MemberController extends Controller
      * @param  \App\Members  $members
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Members $members)
+    public function destroy()
     {
         //
     }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('title', 'Reset Password')
-@section('menu','member.list')
+@section('menu','member')
 @section('content')
 <div class="rui-page-title">
     <div class="container-fluid">

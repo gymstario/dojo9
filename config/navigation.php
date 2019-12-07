@@ -4,7 +4,7 @@ return [
     'dashboard' => [
         'name' => 'Dashboard',
         'icon' => 'home',
-        'url' => 'dashboard.get'
+        'url' => '/dashboard'
     ],
     'member' => [
         'name' => 'Members',
