@@ -51,7 +51,7 @@ class MemberController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'strip_customer_id' => $request->strip_customer_id,
-            'enrolment' => $request->enrolment
+            // 'enrolment' => $request->enrolment
 
         ]);
     }

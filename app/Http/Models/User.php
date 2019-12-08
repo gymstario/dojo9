@@ -41,7 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function member()
     {
-        return $this->hasOne('App\Models\Member');
+        return $this->hasOne('App\Http\Models\Member');
     }
 
     public function isValidSubscription()

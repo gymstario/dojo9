@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Stores extends Migration
+class Studios extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class Stores extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('stores')) {
-            Schema::create('stores', function (Blueprint $table) {
+        if (!Schema::hasTable('studios')) {
+            Schema::create('studios', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('member_id');
                 $table->string('name');
                 $table->string('phone');
+                $table->string('email');
                 $table->string('address');
                 $table->string('city');
                 $table->string('state');
@@ -30,20 +31,21 @@ class Stores extends Migration
                 $table->longText('description');
                 $table->dateTime('date');
                 $table->string('ip');
-                $table->string('strip_customer_id');
+                $table->string('stripe_account_id');
+                $table->string('status')->default('pending');
                 $table->timestamps();
                 $table->softDeletes();
             });
 
-            Schema::table('stores', function (Blueprint $table) {
-              //  $table->foreign('member_id')->references('id')->on('members'); // hasmnany
+            Schema::table('studios', function (Blueprint $table) {
+                //  $table->foreign('member_id')->references('id')->on('members'); // hasmnany
             });
         }
 
         if (!Schema::hasTable('branches')) {
             Schema::create('branches', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('store_id');
+                $table->integer('studio_id');
                 $table->string('name');
                 $table->string('phone')->nullable();
                 $table->string('address')->nullable();
@@ -56,7 +58,7 @@ class Stores extends Migration
             });
 
             Schema::table('branches', function (Blueprint $table) {
-              //  $table->foreign('store_id')->references('id')->on('stores'); // hasmany
+                //  $table->foreign('studio_id')->references('id')->on('studios'); // hasmany
             });
         }
     }
@@ -69,6 +71,6 @@ class Stores extends Migration
     public function down()
     {
         Schema::dropIfExists('branches');
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('studios');
     }
 }

@@ -9,44 +9,19 @@ class PlanService
 {
     public static function getAll($limit = 100, $stripeAccountId = null)
     {
-        try {
-            $options = [
-                'limit' => $limit,
-            ];
-            if ($stripeAccountId === null) {
-                $plans = Plan::all($options);
-            } else {
-                $plans = Plan::all($options, ['stripe_account' => $stripeAccountId]);
-            }
-            return $plans;
-            $return = [];
-            foreach ($plans as $plan) {
-                $meta = json_encode($plan['metadata']);
-                $return[] = [
-                    'stripeId' => $plan['id'],
-                    'name' => $plan['nickname'],
-                    'currency' => $plan['currency'],
-                    'interval' => $plan['interval'],
-                    'product' => $plan['product'],
-                    'active' => $plan['active'],
-                    'interval_count' => $plan['interval_count'],
-                    'amount' => $plan['amount'] / 100,
-                    'attributes' => json_decode($meta, true)
-                ];
-            }
-            return $return;
-        } catch (\Exception $e) {
-            Log::error($e);
+        $options = [
+            'limit' => $limit,
+        ];
+        if ($stripeAccountId === null) {
+            $plans = Plan::all($options);
+        } else {
+            $plans = Plan::all($options, ['stripe_account' => $stripeAccountId]);
         }
-        return false;
-    }
-
-    public static function get($id)
-    {
-        try {
-            $plan = Plan::retrieve($id);
+        return $plans;
+        $return = [];
+        foreach ($plans as $plan) {
             $meta = json_encode($plan['metadata']);
-            return [
+            $return[] = [
                 'stripeId' => $plan['id'],
                 'name' => $plan['nickname'],
                 'currency' => $plan['currency'],
@@ -57,38 +32,48 @@ class PlanService
                 'amount' => $plan['amount'] / 100,
                 'attributes' => json_decode($meta, true)
             ];
-        } catch (\Exception $e) {
-            Log::error($e);
         }
-        return false;
+        return $return;
+    }
+
+    public static function get($id)
+    {
+        $plan = Plan::retrieve($id);
+        $meta = json_encode($plan['metadata']);
+        return [
+            'stripeId' => $plan['id'],
+            'name' => $plan['nickname'],
+            'currency' => $plan['currency'],
+            'interval' => $plan['interval'],
+            'product' => $plan['product'],
+            'active' => $plan['active'],
+            'interval_count' => $plan['interval_count'],
+            'amount' => $plan['amount'] / 100,
+            'attributes' => json_decode($meta, true)
+        ];
     }
 
     public static function save($name, $interval, $product, $interval_count, $amount, $data, $stripeAccountId = null, $stripeId = null)
     {
-        try {
-            $data = [
-                'nickname' => $name,
-                'currency' => 'USD',
-                'interval' => $interval,
-                'product' => $product,
-                'interval_count' => $interval_count,
-                'amount' => $amount,
-                'metadata' => $data,
-            ];
-            if ($stripeId == null || $stripeId == '') {
-                if ($stripeAccountId === '') {
-                    $plan = Plan::create($data);
-                } else {
-                    $plan = Plan::create($data, ['stripe_account' => $stripeAccountId]);
-                }
+        $data = [
+            'nickname' => $name,
+            'currency' => 'USD',
+            'interval' => $interval,
+            'product' => $product,
+            'interval_count' => $interval_count,
+            'amount' => $amount,
+            'metadata' => $data,
+        ];
+        if ($stripeId == null || $stripeId == '') {
+            if ($stripeAccountId === '') {
+                $plan = Plan::create($data);
             } else {
-                $plan = Plan::update($stripeId, $data);
+                $plan = Plan::create($data, ['stripe_account' => $stripeAccountId]);
             }
-            return $plan['id'] !== '' && $plan['id'] !== null ? $plan['id'] : false;
-        } catch (\Exception $e) {
-            Log::error($e);
+        } else {
+            $plan = Plan::update($stripeId, $data);
         }
-        return false;
+        return $plan['id'];
     }
 
     public static function delete($id)

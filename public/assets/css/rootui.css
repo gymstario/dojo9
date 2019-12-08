@@ -8126,7 +8126,7 @@ h6,
 }
 
 .carousel-light .carousel-indicators li {
-    background-color: #bcbec0;
+    background-color: #000;
     -webkit-transition: opacity .15s ease-in-out;
     -o-transition: opacity .15s ease-in-out;
     transition: opacity .15s ease-in-out;

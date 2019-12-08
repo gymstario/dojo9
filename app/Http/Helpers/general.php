@@ -74,6 +74,8 @@ function unload_messages()
         return '<div class="alert alert-success" role="alert">A fresh verification link has been sent to your email address.</div>';
     } else if (session('status') !== null) {
         return '<div class="alert alert-success" role="alert">' . session('status') . '</div>';
+    } else if (session('showVerificationErrors') !== null) {
+        return '<div class="alert alert-danger" role="alert"><div class="display-4">Your Account is Limited</div>' . implode('<br />', session('showVerificationErrors')['messages']) . '<br /><br /><a href="' . route('studio.get') . '" class="btn btn-brand text-center">Update Studio Information</a> <a href="' . create_support_mailto('Verification Steps Required [' . session('showVerificationErrors')['id'] . ']', implode("%20%0A", session('showVerificationErrors')['messages'])) . '" class="btn btn-primary text-center">Contact Support</a></div>';
     }
 }
 
@@ -452,56 +454,60 @@ function get_status($value, $type)
     return $statusList[$type][$value];
 }
 
-function field_wrap($errors, $label, $name, $type = "", $options = [], $class = "col-4", $vmodel = "")
+function field_wrap($errors, $label, $name, $type = "", $options = [], $class = "col-4", $data = null, $dataName = null)
 {
 
     $tmp = [
         "class" => "form-control m-input ",
     ];
-    if ($vmodel != "" && $type != "daterange") {
-        $tmp["v-model"] = $vmodel;
-    } else if ($vmodel != "" && $type == "daterange") {
-        $tmp["v-model"] = $vmodel;
-    }
+
+    $value = isset($data[$dataName]) ? $data[$dataName] : old($name);
+
 
     if ($type == "select") {
         $options = $options;
-        $input = Form::select($name, $options, old($name), $tmp);
+        $input = Form::select($name, $options, $value, $tmp);
     } else if ($type == "textarea") {
-        $input = Form::textarea($name, old($name), $tmp);
+        $input = Form::textarea($name, $value, $tmp);
     } else if ($type == "wysiwyg") {
         $tmp["class"] = "summernote";
-        $input = Form::textarea($name, old($name), $tmp);
+        $input = Form::textarea($name, $value, $tmp);
     } else if ($type == "daterange") {
         $tmp["class"] .= "daterange-picker";
-        $input = Form::text($name, old($name), $tmp);
+        $input = Form::text($name, $value, $tmp);
     } else if ($type == "date") {
-        // $tmp["class"] .= "datepicker";
-        $input = Form::date($name, old($name), $tmp);
+        $input = Form::date($name, $value, $tmp);
+    } else if ($type == "file") {
+        $input = Form::file($name, $tmp);
+    } else if ($type == "phone") {
+        $tmp['data-inputmask'] = "'mask': '(999) 999-9999'";
+        $input = Form::text($name, $value, $tmp);
+    } else if ($type == "tax") {
+        $tmp['data-inputmask'] = "'mask': '999-99-9999'";
+        $input = Form::text($name, $value, $tmp);
     } else {
-        $input = Form::text($name, old($name), $tmp);
+        $input = Form::text($name, $value, $tmp);
+    }
+
+    $errorName = $name;
+    if (strpos($name, '[') >= 0) {
+        $errorName = str_replace(']', '', str_replace('[', '.', $name));
     }
 
     return '
-    <div class="' . $class . ($errors->has($name) ? " has-danger" : "") . '">
+    <div class="' . $class . ($errors->has($errorName) ? " has-danger" : "") . '">
         ' . ($label != '' ? '<label class="form-control-label">' . $label . '</label>' : '') .
         $input . '
-        <div class="form-control-feedback">' . $errors->first($name) . '</div>
+        <div class="form-control-feedback">' . str_replace('.', ' ', $errors->first($errorName)) . '</div>
     </div>';
 }
 
-function field_wrap_edit($data, $dataName, $errors, $label, $name, $type = "", $options = [], $class = "col-lg-4", $vmodel = "")
+function field_wrap_edit($data, $dataName, $errors, $label, $name, $type = "", $options = [], $class = "col-lg-4")
 {
 
     $tmp = [
         "class" => "form-control m-input ",
-        "placeholder" => $label,
     ];
-    if ($vmodel != "" && $type != "daterange") {
-        $tmp["v-model"] = $vmodel;
-    } else if ($vmodel != "" && $type == "daterange") {
-        $tmp["v-model"] = $vmodel;
-    }
 
     $value = isset($data[$dataName]) ? $data[$dataName] : old($name);
 
@@ -703,20 +709,6 @@ function get_alert($type = 'outline', $header = '', $message = '', $class = '')
     }
 }
 
-function field_location_group($data, $errors, $class = '', $name = 'group')
-{
-    $user = auth()->user();
-    $groups = $user->locationGroups();
-    if ($groups->count() > 0) {
-        if (!is_partner($user->type)) {
-            return field_wrap_edit($data, "group_id", $errors, "Group", $name, "select", $groups->pluck("name", "id"), $class);
-        } else {
-            return field_wrap_edit($data, "group_id", $errors, "<group-select :brand=\"brand\"></group-select>", "", "vue", [], $class);
-        }
-    } else {
-        return field_wrap_edit($data, "group_id", $errors, "Group", $name, "text", [], $class);
-    }
-}
 
 function field_brand($data, $errors, $class = '', $name = 'brand')
 {
@@ -736,33 +728,6 @@ function get_prop_value($array, $field)
     return "";
 }
 
-function filteredCart($item = "")
-{
-    if ($item != "") {
-        $cart = Cart::content()->filter(function ($value, $key) use ($item) {
-            return $value->id == $item;
-        });
-
-        return $cart;
-    }
-    return Cart::content();
-}
-
-function cartCount($item = "")
-{
-    $items = filteredCart($item);
-    return $items->sum("qty");
-}
-
-function cartSubtotal($item = "")
-{
-    $amount = 0;
-    $items = filteredCart($item);
-    foreach ($items as $item) {
-        $amount += $item->price * $item->qty;
-    }
-    return number_format($amount, 2);
-}
 
 function limitPercentage($limit, $unused)
 {
@@ -832,4 +797,26 @@ function is_partner($type)
 function get_date_diff($date1, $date2)
 {
     return date_diff(date_create($date1), date_create($date2))->format("%a");
+}
+
+function get_mcc_dropdown()
+{
+    $output = [];
+    foreach (config('mcc') as $mcc) {
+        $output[$mcc['value']] = $mcc['name'];
+    }
+    return $output;
+}
+
+function create_support_mailto($subject, $body)
+{
+    return 'mailto:support@gymstar.com?subject=' . $subject . '&body=Your Custom Message:%20%0A%20%0A%20%0A%20%0A' . $body;
+}
+
+function throw_exception($message)
+{
+    $error = \Illuminate\Validation\ValidationException::withMessages([
+        'message' => $message
+    ]);
+    throw $error;
 }

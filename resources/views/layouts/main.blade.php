@@ -66,17 +66,11 @@
         <div class="rui-page content-wrap">
         <div class="rui-main">
                 <main>
+                    {!! unload_messages() !!}
                     @yield('content')
                 </main>
             </div>
-
-
-
-
-
-
-
-
+            @include('studio.setup')
         @auth
         @include('layouts.footer')
     @endauth
@@ -85,7 +79,13 @@
 <script src="{{ asset('assets/js/vendor.js') }}"></script>
 <script src="{{ asset('assets/js/rootui.js') }}"></script>
 <script src="{{ asset('assets/js/rootui-init.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
 @yield('js')
+<script>
+$(document).ready(function(){
+    $(".modal").modal('show');
+});
+</script>
 </body>
 </html>
 

@@ -10,7 +10,7 @@
  */
 /*------------------------------------------------------------------
   [Table of contents]
-  
+
   1. Demo
   2. Base
   3. Typography
@@ -1269,17 +1269,17 @@ h6,
  ----------------------------*/
 .carousel-light .carousel-control-prev,
 .carousel-light .carousel-control-next {
-    color: #586069;
+    color: #000;
 }
 
 .carousel-light .carousel-control-prev:hover, .carousel-light .carousel-control-prev.hover,
 .carousel-light .carousel-control-next:hover,
 .carousel-light .carousel-control-next.hover {
-    color: #a0aebb;
+    color: #000;
 }
 
 .carousel-light .carousel-indicators li {
-    background-color: #586069;
+    background-color: #000;
 }
 
 .carousel-light .carousel-caption {

@@ -21,6 +21,7 @@ class AdminController extends Controller
         $productId = $this->objStripManager->Product->save('Dojo', 'service');
         $product = new Product;
         $product->stripe_id = $productId;
+        $product->type = 'gymstar';
         $product->save();
         $planId = $this->objStripManager->Plan->save('Dojo Plan 1', 'month', $productId, 1, 20000, [
             "Branches" => 1,

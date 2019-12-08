@@ -21,10 +21,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', ['as' => 'dashboard.get', 'uses' => 'OwnerController@dashboard']);
-Route::get('/members', ['as' => 'members.list', 'uses' => 'MemberController@index']);
-Route::get('/payments', ['as' => 'payments.list', 'uses' => 'PaymentController@index']);
-Route::get('/plans', ['as' => 'plans.list', 'uses' => 'PlansController@index']);
-Route::get('/settings', ['as' => 'settings.get', 'uses' => 'OwnerController@setting']);
+
+Route::middleware(['owner', 'auth'])->group(function () {
+    Route::get('/dashboard', ['as' => 'dashboard.get', 'uses' => 'OwnerController@dashboard']);
+    Route::get('/studio', ['as' => 'studio.get', 'uses' => 'StudioController@setup']);
+    Route::post('/studio', ['as' => 'studio.post', 'uses' => 'StudioController@postSetup']);
+    Route::get('/members', ['as' => 'members.list', 'uses' => 'MemberController@index']);
+    Route::get('/payments', ['as' => 'payments.list', 'uses' => 'PaymentController@index']);
+    Route::get('/plans', ['as' => 'plans.list', 'uses' => 'PlansController@index']);
+    Route::get('/settings', ['as' => 'settings.get', 'uses' => 'OwnerController@setting']);
+});
 
 // Route::get("/business/setup", ["as" => "auth.business.setup.get", "uses" => "CommerceController@getAgencyRequest"]);

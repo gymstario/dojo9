@@ -9,68 +9,53 @@ class ProductService
 {
     public static function getAll($limit = 100, $stripeAccountId = null)
     {
-        try {
-            $options = [
-                'limit' => $limit,
-            ];
+        $options = [
+            'limit' => $limit,
+        ];
 
-            if ($stripeAccountId == null || $stripeAccountId == '') {
-                $products = Product::all($options, ["stripe_account" => null]);
-            } else {
-                $products = Product::all($options, ["stripe_account" => $stripeAccountId]);
-            }
-
-            return $products;
-
-            $return = [];
-            foreach ($products as $product) {
-                $return[] = [
-                    'name' => $product['name'],
-                    'type' => $product['type'],
-                ];
-            }
-            return $return;
-        } catch (\Exception $e) {
-            Log::error($e);
+        if ($stripeAccountId == null || $stripeAccountId == '') {
+            $products = Product::all($options, ["stripe_account" => null]);
+        } else {
+            $products = Product::all($options, ["stripe_account" => $stripeAccountId]);
         }
-        return false;
+
+        return $products;
+
+        $return = [];
+        foreach ($products as $product) {
+            $return[] = [
+                'name' => $product['name'],
+                'type' => $product['type'],
+            ];
+        }
+        return $return;
     }
 
     public static function get($id)
     {
-        try {
-            $product = Product::retrieve($id);
-            return [
-                'name' => $product['name'],
-                'type' => $product['type'],
-            ];
-        } catch (\Exception $e) {
-            Log::error($e);
-        }
-        return false;
+        $product = Product::retrieve($id);
+        return [
+            'name' => $product['name'],
+            'type' => $product['type'],
+        ];
     }
 
     public static function save($name, $type, $stripeAccountId = null, $stripeId = null)
     {
-        try {
-            $data = [
-                'name' => $name,
-                'type' => $type,
-            ];
-            if ($stripeId == null || $stripeId == '') {
-                if ($stripeAccountId === null) {
-                    $product = Product::create($data);
-                } else {
-                    $product = Product::create($data, ["stripe_account" => $stripeAccountId]);
-                }
+        $data = [
+            'name' => $name,
+            'type' => $type,
+        ];
+        if ($stripeId == null || $stripeId == '') {
+            if ($stripeAccountId === null) {
+                $product = Product::create($data);
             } else {
-                $product = Product::update($stripeId, $data);
+                $product = Product::create($data, ["stripe_account" => $stripeAccountId]);
             }
-            return $product['id'] !== '' && $product['id'] !== null ? $product['id'] : false;
-        } catch (\Exception $e) {
-            Log::error($e);
+        } else {
+            $product = Product::update($stripeId, $data);
         }
-        return false;
+        return $product['id'];
     }
 
     public static function delete($id)

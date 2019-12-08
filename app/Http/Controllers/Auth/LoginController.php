@@ -32,6 +32,7 @@ class LoginController extends Controller
         if (Auth::viaRemember() || Auth::attempt($credentials, $remember === 'on')) {
             $status = Auth::user()->isValidSubscription();
             if ($status === true) {
+                dd(Auth::user()->member);
                 return redirect()->intended('home');
             } else {
                 return redirect()->back()->withInput()->with(['error' => 'Your subscription has ' . $status]);

@@ -11,6 +11,11 @@ return [
         'icon' => 'users',
         'url' => '/members'
     ],
+    'studio' => [
+        'name' => 'Studio',
+        'icon' => 'credit-card',
+        'url' => '/studio'
+    ],
     'payment' => [
         'name' => 'Payments',
         'icon' => 'credit-card',

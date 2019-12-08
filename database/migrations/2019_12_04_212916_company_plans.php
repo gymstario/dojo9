@@ -18,6 +18,7 @@ class CompanyPlans extends Migration
             Schema::create('products', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('stripe_id');
+                $table->string('type')->default('school')->comment('gymstar, studio, branch, class');
                 $table->timestamps();
                 $table->softDeletes();
             });
