@@ -26,4 +26,20 @@ class Plan extends Model
         }
         return [];
     }
+
+    public static function getOwnerPlans($id)
+    {
+        $objStripe = new StripeMarketplaceManager();
+        $data = $objStripe->Plan->getAll(100, $id);
+        return [
+            "data" => $data["data"],
+            "hasMore" => $data["has_more"]
+        ];
+    }
+
+    public static function add($data, $stripeAccount)
+    {
+        $objStripe = new StripeMarketplaceManager();
+        return $objStripe->Plan->save($data['name'], $data['type'], $data['target'], $data['interval'], $data['amount'], $data['attributes'], $data['active'], $stripeAccount);
+    }
 }

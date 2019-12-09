@@ -30,6 +30,6 @@ class HomeController extends Controller
     public function index()
     {
         // Gate::allows('is-admin')
-        return view('home');
+        return view('dashboard');
     }
 }

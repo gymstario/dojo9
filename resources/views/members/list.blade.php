@@ -3,33 +3,15 @@
 @section('menu','member')
 @section('content')
 <div class="rui-page-title">
-    <div class="container-fluid">
-        <!-- START: Breadcrumbs -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#"> </a>
-                </li>
-            </ol>
-        </nav>
-        <!-- END: Breadcrumbs -->
-
-        <h1 class="member-heading">
-            Members |<span class="total-member">50 Total</span>
-        </h1>
-        <span
-            ><input
-                type="text"
-                placeholder="Search"
-                class="form-control set-search-input"/><span
-                class="fa fa-search form-control-feedback set-icon-input"
-            ></span
-        ></span>
-        <div>
-            <button class="btn btn-primary btn-property">Add Member</button>
+        <div class="container-fluid">
+            <h1 class="display-3">
+                Members
+            </h1>
+            <div>
+                <button class="btn btn-primary btn-property">Add Member</button>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="rui-page-content">
     <div class="container-fluid">
@@ -236,66 +218,6 @@
                 </span>
             </div>
         </div>
-        <div class="set-pagintion">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item pagination-btn">
-                        <a class="page-link" href="#"
-                            ><span
-                                data-feather="chevron-left"
-                                class="rui-icon rui-icon-stroke-1_5"
-                            ></span
-                        ></a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">6</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">7</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">8</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">9</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">10</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#"
-                            ><span
-                                data-feather="chevron-right"
-                                class="rui-icon rui-icon-stroke-1_5"
-                            ></span
-                        ></a>
-                    </li>
-                    <li>
-                        <input
-                            type="number"
-                            value="10"
-                            class="form-control pegition-control"
-                        />
-                    </li>
-                    <li class="record">Display 10 of 230 records</li>
-                </ul>
-            </nav>
-        </div>
-        @endsection
     </div>
 </div>
+@endsection

@@ -12,15 +12,11 @@ class PlanService
         $options = [
             'limit' => $limit,
         ];
-        if ($stripeAccountId === null) {
-            $plans = Plan::all($options);
-        } else {
-            $plans = Plan::all($options, ['stripe_account' => $stripeAccountId]);
-        }
-        return $plans;
+        $plans = Plan::all($options, ['stripe_account' => $stripeAccountId]);
         $return = [];
-        foreach ($plans as $plan) {
+        foreach ($plans['data'] as $plan) {
             $meta = json_encode($plan['metadata']);
+            $product = ProductService::get($plan['product'], $stripeAccountId);
             $return[] = [
                 'stripeId' => $plan['id'],
                 'name' => $plan['nickname'],
@@ -30,10 +26,11 @@ class PlanService
                 'active' => $plan['active'],
                 'interval_count' => $plan['interval_count'],
                 'amount' => $plan['amount'] / 100,
+                'product' => $product,
                 'attributes' => json_decode($meta, true)
             ];
         }
-        return $return;
+        return ['has_more' => $plans['has_more'], 'data' => $return];
     }
 
     public static function get($id)
@@ -53,7 +50,7 @@ class PlanService
         ];
     }
 
-    public static function save($name, $interval, $product, $interval_count, $amount, $data, $stripeAccountId = null, $stripeId = null)
+    public static function save($name, $interval, $product, $interval_count, $amount, $data, $isActive = true, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             'nickname' => $name,
@@ -61,19 +58,17 @@ class PlanService
             'interval' => $interval,
             'product' => $product,
             'interval_count' => $interval_count,
-            'amount' => $amount,
+            'amount' => $amount * 100,
+            'active' => $isActive === '1' ? true : $isActive,
+            'billing_scheme' => 'per_unit',
             'metadata' => $data,
         ];
         if ($stripeId == null || $stripeId == '') {
-            if ($stripeAccountId === '') {
-                $plan = Plan::create($data);
-            } else {
-                $plan = Plan::create($data, ['stripe_account' => $stripeAccountId]);
-            }
+            $plan = Plan::create($data, ['stripe_account' => $stripeAccountId]);
         } else {
             $plan = Plan::update($stripeId, $data);
         }
-        return $plan['id'];
+        return $plan;
     }
 
     public static function delete($id)

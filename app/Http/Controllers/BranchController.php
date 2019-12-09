@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Branch;
+use App\Http\Models\Branch;
 use Illuminate\Http\Request;
+use App\Http\Requests\BranchRequest;
 
 class BranchController extends Controller
 {
@@ -15,6 +16,7 @@ class BranchController extends Controller
     public function index()
     {
         //
+        return view('studio.branch.list', ['branches' => Branch::getOwnerBranches(auth()->user()->member->studio->id)]);
     }
 
     /**
@@ -35,11 +37,19 @@ class BranchController extends Controller
      */
     public function store(BranchRequest $request)
     {
-        $branch = Branch::create([
-
-            'name' =>  $request->name
-
-        ]);
+        try {
+            $data = $request->all();
+            $studio = auth()->user()->member->studio;
+            $data['studio'] = $studio->id;
+            $branch = Branch::add($data, $studio->stripe_account_id);
+            if ($branch !== false) {
+                return redirect()->back()->with(['success' => 'You have added the plan successfully.']);
+            }
+            return redirect()->back()->with(['error' => 'An unexpected error occured. Please try again.']);
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with(['error' => 'An unexpected error occured. Please try again.']);
+        }
     }
 
     /**

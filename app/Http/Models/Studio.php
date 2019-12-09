@@ -27,6 +27,7 @@ class Studio extends Model
             return false;
         }
         $objStripe->Account->savePerson($data['owner'], $accountId);
+        $objStripe->Product->save($data['studio']['name'] . '(Studio)', 'service');
         $objStudio = new Studio;
         $objStudio->member_id = $data['studio']['memberId'];
         $objStudio->name = $data['studio']['name'];
@@ -45,7 +46,7 @@ class Studio extends Model
 
         $objStudio->date = $data['studio']['date'];
         $objStudio->ip = $data['studio']['ip'];
-        $objStudio->strip_account_id = $accountId;
+        $objStudio->stripe_account_id = $accountId;
         if ($objStudio->save()) {
             return $objStudio;
         }
@@ -56,13 +57,6 @@ class Studio extends Model
     {
         $data['owner']['userId'] = $userId;
         $data['owner']['type'] = 'owner';
-        $data['owner']['enrolment'] = $data['studio']['date'];
-        $data['owner']['phone'] = '(555) 555-1234';
-        $data['owner']['state'] = 'AZ';
-        $data['owner']['zip'] = '99501';
-        $data['studio']['phone'] = '(555) 555-1234';
-        $data['studio']['state'] = 'AZ';
-        $data['studio']['zip'] = '99501';
         $objMember = Member::add($data['owner']);
         if ($objMember !== false) {
             $data['studio']['memberId'] = $objMember->id;

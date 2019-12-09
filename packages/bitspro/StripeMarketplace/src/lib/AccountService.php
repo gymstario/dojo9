@@ -201,11 +201,11 @@ class AccountService
         return $account['id'];
     }
 
-    public static function saveFile($path)
+    public static function saveFile($path, $purpose = 'identity_document')
     {
         $fp = fopen($path, 'r');
         $file = File::create([
-            'purpose' => 'dispute_evidence',
+            'purpose' => $purpose,
             'file' => $fp
         ]);
         return $file['id'];
@@ -253,6 +253,13 @@ class AccountService
                     ]
                 ]
             ],
+            'external_account' => [
+                'object' => 'bank_account',
+                'country' => $data['country'],
+                'currency' => 'usd',
+                'routing_number' => $data['routing'],
+                'account_number' => $data['account'],
+            ],
         ];
 
         if ($stripeId == null || $stripeId == '') {
@@ -265,6 +272,9 @@ class AccountService
 
     public static function savePerson($data, $accountId)
     {
+        $frontId = AccountService::saveFile($data['frontPath']);
+        $backId = AccountService::saveFile($data['frontPath']);
+
         $relationship = [
             'owner' => true,
             'percent_ownership' => 100,
@@ -293,6 +303,12 @@ class AccountService
             'id_number' => $data['ssn'],
             'phone' => $data['phone'],
             'email' => $data['email'],
+            'verification' => [
+                'document' => [
+                    'front' => $frontId,
+                    'back' => $backId
+                ]
+            ]
         ]);
         return $person['id'];
     }

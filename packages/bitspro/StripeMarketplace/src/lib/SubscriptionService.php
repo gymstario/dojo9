@@ -7,7 +7,7 @@ use Stripe\Subscription;
 
 class SubscriptionService
 {
-    public static function getAll($limit = 100, $stripeAccountId)
+    public static function getAll($limit = 100, $stripeAccountId = null)
     {
         $options = [
             'limit' => $limit,

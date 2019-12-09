@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Models\Studio;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,7 @@ class OwnerActionAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->member === null) {
+        if (Auth::user()->member === null || Auth::user()->member->studio === null) {
             $request->session()->put('showSetupModal', true);
         } else {
             $request->session()->forget('showSetupModal');

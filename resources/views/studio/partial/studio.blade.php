@@ -17,11 +17,17 @@
             {!! field_wrap($errors, "Tax ID", "studio[tax]", "tax", [], "col-md-6 col-xs-12", $studio ?? [], 'tax_id') !!}
             {!! field_wrap($errors, "Date Established", "studio[date]", "date", [], "col-md-6 col-xs-12", $studio ?? [], 'date') !!}
             {!! field_wrap($errors, "Description", "studio[description]", "", [], "col-md-12 col-xs-12", $studio ?? [], 'description') !!}
-            <div class="col-md-12 col-xs-12 display-4" style="margin-bottom: 18px;margin-top: 17px;">
+            <div class="col-md-12 col-xs-12 display-4" style="margin-bottom: 15px;margin-top: 17px;">
+                Recieving Account
+            </div>
+
+            {!! field_wrap($errors, "Routing Number", "studio[routing]", "", [], "col-md-6 col-xs-12") !!}
+            {!! field_wrap($errors, "Account Number", "studio[account]", "", [], "col-md-6 col-xs-12") !!}
+            <div class="col-md-12 col-xs-12 display-4" style="margin-bottom: 9px;margin-top: 17px;">
                 Verification Documents
             </div>
-            {!! field_wrap($errors, "Front Photo", "front", "file", [], "col-md-6 col-xs-12") !!}
-            {!! field_wrap($errors, "Back Photo", "back", "file", [], "col-md-6 col-xs-12") !!}
+            {!! field_wrap($errors, "Front Photo", "store_front", "file", [], "col-md-6 col-xs-12") !!}
+            {!! field_wrap($errors, "Back Photo", "store_back", "file", [], "col-md-6 col-xs-12") !!}
         </div>
     </div>
     <div class="col-md-4 col-xs-12 set-col">
@@ -41,6 +47,11 @@
             {!! field_wrap($errors, "State", "owner[state]", "select", config('state'), "col-md-6 col-xs-6", $member ?? [], 'state') !!}
             {!! field_wrap($errors, "Zip", "owner[zip]", "", [], "col-md-6 col-xs-6", $member ?? [], 'zip') !!}
             {!! field_wrap($errors, "Date of Birth", "owner[dob]", "date", [], "col-md-12 col-xs-12", $member ?? [], 'dob') !!}
+            <div class="col-md-12 col-xs-12 display-4" style="margin-bottom: 18px;margin-top: 17px;">
+                Verification Documents
+            </div>
+            {!! field_wrap($errors, "Front Photo", "owner_front", "file", [], "col-md-12 col-xs-12") !!}
+            {!! field_wrap($errors, "Back Photo", "owner_back", "file", [], "col-md-12 col-xs-12") !!}
         </div>
     </div>
 </div>

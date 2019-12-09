@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Studios extends Migration
+class Studio extends Migration
 {
     /**
      * Run the migrations.
@@ -46,6 +46,7 @@ class Studios extends Migration
             Schema::create('branches', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('studio_id');
+                $table->string('stripe_product_id')->nullable();
                 $table->string('name');
                 $table->string('phone')->nullable();
                 $table->string('address')->nullable();

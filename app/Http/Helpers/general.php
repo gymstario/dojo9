@@ -482,6 +482,9 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
     } else if ($type == "phone") {
         $tmp['data-inputmask'] = "'mask': '(999) 999-9999'";
         $input = Form::text($name, $value, $tmp);
+    } else if ($type == "time") {
+        $tmp['data-inputmask'] = "'mask': '99:99'";
+        $input = Form::text($name, $value, $tmp);
     } else if ($type == "tax") {
         $tmp['data-inputmask'] = "'mask': '999-99-9999'";
         $input = Form::text($name, $value, $tmp);

@@ -20,6 +20,11 @@ class Member extends Model
         return $this->hasOne('App\Http\Models\Studio');
     }
 
+    public function products()
+    {
+        return $this->hasMany('App\Http\Models\Product');
+    }
+
     public static function add($data, $setupStripe = false)
     {
         $objMember = new Member;

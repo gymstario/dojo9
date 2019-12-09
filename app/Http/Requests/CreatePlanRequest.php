@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BranchRequest extends FormRequest
+class CreatePlanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,12 @@ class BranchRequest extends FormRequest
     public function rules()
     {
         return [
+            //
             'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'address' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required|digits:5',
+            'type' => 'required',
+            'interval' => 'required',
+            'amount' => 'required',
+            'active' => 'required',
         ];
     }
 }

@@ -13,17 +13,11 @@ class ProductService
             'limit' => $limit,
         ];
 
-        if ($stripeAccountId == null || $stripeAccountId == '') {
-            $products = Product::all($options, ["stripe_account" => null]);
-        } else {
-            $products = Product::all($options, ["stripe_account" => $stripeAccountId]);
-        }
-
-        return $products;
-
+        $products = Product::all($options, ["stripe_account" => $stripeAccountId]);
         $return = [];
         foreach ($products as $product) {
             $return[] = [
+                'id' => $product['id'],
                 'name' => $product['name'],
                 'type' => $product['type'],
             ];
@@ -31,10 +25,11 @@ class ProductService
         return $return;
     }
 
-    public static function get($id)
+    public static function get($id, $stripeAccountId = null)
     {
-        $product = Product::retrieve($id);
+        $product = Product::retrieve($id, ["stripe_account" => $stripeAccountId]);
         return [
+            'id' => $product['id'],
             'name' => $product['name'],
             'type' => $product['type'],
         ];

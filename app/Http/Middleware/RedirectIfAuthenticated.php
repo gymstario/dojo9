@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             // ToDo: After authentication redirect to correct path.
-            return redirect('/home');
+            return redirect('/dashboard');
         }
 
         return $next($request);

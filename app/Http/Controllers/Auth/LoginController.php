@@ -32,8 +32,7 @@ class LoginController extends Controller
         if (Auth::viaRemember() || Auth::attempt($credentials, $remember === 'on')) {
             $status = Auth::user()->isValidSubscription();
             if ($status === true) {
-                dd(Auth::user()->member);
-                return redirect()->intended('home');
+                return redirect()->intended('dashboard');
             } else {
                 return redirect()->back()->withInput()->with(['error' => 'Your subscription has ' . $status]);
             }
@@ -57,6 +56,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+        session()->flush();
         return redirect()->route('login');
     }
 }

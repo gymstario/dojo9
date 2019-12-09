@@ -19,21 +19,10 @@ class PaymentMethodService
             ],
         ];
         if ($stripeId == null || $stripeId == '') {
-            if ($stripeAccountId === '') {
-                $paymentMethod = PaymentMethod::create($data);
-            } else {
-                $paymentMethod = PaymentMethod::create($data, ["stripe_account" => $stripeAccountId]);
-            }
+            $paymentMethod = PaymentMethod::create($data, ["stripe_account" => $stripeAccountId]);
         } else {
             $paymentMethod = PaymentMethod::update($stripeId, $data);
         }
         return $paymentMethod['id'];
-    }
-
-    public static function delete($id)
-    {
-        $paymentMethod = PaymentMethod::retrieve($id);
-        $response = []; // $paymentMethod->delete();
-        return $response['deleted'];
     }
 }

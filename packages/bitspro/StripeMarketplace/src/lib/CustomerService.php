@@ -8,7 +8,7 @@ use Stripe\Token;
 
 class CustomerService
 {
-    public static function getAll($email = null, $limit = 100)
+    public static function getAll($email = null, $limit = 100, $stripeAccountId = null)
     {
         $options = [
             'limit' => $limit,
@@ -16,7 +16,7 @@ class CustomerService
         if ($email !== null && $email !== '') {
             $options['email'] = $email;
         }
-        $customers = Customer::all($options);
+        $customers = Customer::all($options, ["stripe_account" => $stripeAccountId]);
         $return = [];
         foreach ($customers as $customer) {
             $return[] = [
@@ -28,9 +28,9 @@ class CustomerService
         return $return;
     }
 
-    public static function get($id)
+    public static function get($id, $stripeAccountId = null)
     {
-        $customer = Customer::retrieve($id);
+        $customer = Customer::retrieve($id, ["stripe_account" => $stripeAccountId]);
         return [
             'id' => $customer['id'],
             'name' => $customer['name'],
@@ -49,21 +49,17 @@ class CustomerService
             'source' => $source,
         ];
         if ($stripeId == null || $stripeId == '') {
-            if ($stripeAccountId === '') {
-                $customer = Customer::create($data);
-            } else {
-                $customer = Customer::create($data, ["stripe_account" => $stripeAccountId]);
-            }
+            $customer = Customer::create($data, ["stripe_account" => $stripeAccountId]);
         } else {
-            $customer = Customer::update($stripeId, $data);
+            $customer = Customer::update($stripeId, $data, ["stripe_account" => $stripeAccountId]);
         }
 
         return $customer['id'];
     }
 
-    public static function delete($id)
+    public static function delete($id, $stripeAccountId = null)
     {
-        $customer = Customer::retrieve($id);
+        $customer = Customer::retrieve($id, ["stripe_account" => $stripeAccountId]);
         $response = $customer->delete();
         return $response['deleted'];
     }

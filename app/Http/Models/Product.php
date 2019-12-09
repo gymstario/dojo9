@@ -10,11 +10,12 @@ class Product extends Model
     //
     protected $table = 'products';
 
-    public static function getAdminProducts() {
+    public static function getAdminProducts()
+    {
         $output = [];
         $productIds = Product::all();
         $objStripe = new StripeMarketplaceManager();
-        foreach($productIds as $productId) {
+        foreach ($productIds as $productId) {
             $product = $objStripe->Product->get($productId->stripe_id);
             $output[] = [
                 "id" => $product->id,
@@ -24,5 +25,12 @@ class Product extends Model
             ];
         }
         return $output;
+    }
+
+    public static function getOwnerProducts($id)
+    {
+        $output = [];
+        $objStripe = new StripeMarketplaceManager();
+        return $objStripe->Product->getAll(100, $id);
     }
 }

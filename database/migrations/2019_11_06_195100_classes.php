@@ -16,7 +16,10 @@ class Classes extends Migration
         if (!Schema::hasTable('classes')) {
             Schema::create('classes', function (Blueprint $table) {
                 $table->increments('id');
+                $table->integer('studio_id');
                 $table->integer('branch_id');
+                $table->string('stripe_product_id')->nullable();
+                $table->string('name');
                 $table->time('start');
                 $table->time('end');
                 $table->string('days')->comment('Days of the week like mo,tu,we,th,fr,sa,su');
@@ -25,7 +28,7 @@ class Classes extends Migration
             });
 
             Schema::table('classes', function (Blueprint $table) {
-               // $table->foreign('branch_id')->references('id')->on('branches'); // hasMany
+                // $table->foreign('branch_id')->references('id')->on('branches'); // hasMany
             });
         }
 
@@ -42,8 +45,8 @@ class Classes extends Migration
             });
 
             Schema::table('class_members', function (Blueprint $table) {
-              //  $table->foreign('class_id')->references('id')->on('classes'); // hasMany
-               // $table->foreign('member_id')->references('id')->on('members'); // hasMany
+                //  $table->foreign('class_id')->references('id')->on('classes'); // hasMany
+                // $table->foreign('member_id')->references('id')->on('members'); // hasMany
             });
         }
     }

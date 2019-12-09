@@ -37,8 +37,10 @@ class StudioSetupRequest extends FormRequest
             'studio.mcc' => 'required',
             'studio.url' => 'required|url',
             'studio.date' => 'required|date',
-            'front' => 'required|file',
-            'back' => 'required|file',
+            'store_front' => 'required|file',
+            'store_back' => 'required|file',
+            'studio.routing' => 'required',
+            'studio.account' => 'required',
             'owner.firstName' => 'required',
             'owner.lastName' => 'required',
             'owner.ssn' => 'required|digits:4',
@@ -49,6 +51,8 @@ class StudioSetupRequest extends FormRequest
             'owner.city' => 'required',
             'owner.state' => 'required',
             'owner.zip' => 'required|digits:5',
+            'owner_front' => 'required|file',
+            'owner_back' => 'required|file',
         ];
     }
 }

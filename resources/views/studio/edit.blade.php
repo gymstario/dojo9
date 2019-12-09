@@ -4,11 +4,11 @@
 @section('content')
     <div class="rui-page-title">
         <div class="container-fluid">
-            <h1 class="member-heading">
+            <h1 class="display-3">
                 Studio Setup
             </h1>
             <div>
-                <button class="btn btn-primary btn-property">Branches</button>
+                <button class="btn btn-primary btn-property">Branchesain</button>
             </div>
         </div>
     </div>

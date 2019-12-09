@@ -38,32 +38,32 @@
                       </a>
                   </li>
                     <li class="dropdown dropdown-hover dropdown-triangle dropdown-keep-open">
-                        <span class="user-name">Hi Fawaz</span>
+                        <span class="user-name">Hi {{ auth()->user()->last_name }}</span>
                         <a class="dropdown-item rui-navbar-avatar mnr-6" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="fas fa-user user-img"></span>
                         </a>
                         <ul class="nav dropdown-menu">
                             <li>
-                                <a href="profile.html" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span>
-                                    <span>Create new Post</span>
+                                <a href="{{ route("branch.list") }}" class="nav-link"><span data-feather="plus-circle" class="rui-icon rui-icon-stroke-1_5"></span>
+                                    <span>Manage Branches</span>
                                     <span class="rui-nav-circle"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="profile.html" class="nav-link"><span data-feather="users" class="rui-icon rui-icon-stroke-1_5"></span>
-                                    <span>Manage Users</span>
+                                <a href="{{ route("class.list") }}" class="nav-link"><span data-feather="users" class="rui-icon rui-icon-stroke-1_5"></span>
+                                    <span>Manage Classes </span>
                                     <span class="rui-nav-circle"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="profile.html" class="nav-link"><span data-feather="check-circle" class="rui-icon rui-icon-stroke-1_5"></span>
-                                    <span>Check Updates</span>
+                                <a href="{{ route("studio.get") }}" class="nav-link"><span data-feather="check-circle" class="rui-icon rui-icon-stroke-1_5"></span>
+                                    <span>Manage Studio</span>
                                     <span class="rui-nav-circle"></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="profile.html" class="nav-link"><span data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span>
-                                    <span>Exit</span>
+                                <a href="{{ route("logout") }}" class="nav-link"><span data-feather="log-out" class="rui-icon rui-icon-stroke-1_5"></span>
+                                    <span>Logout</span>
                                     <span class="rui-nav-circle"></span>
                                 </a>
                             </li>

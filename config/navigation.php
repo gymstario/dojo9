@@ -6,15 +6,10 @@ return [
         'icon' => 'home',
         'url' => '/dashboard'
     ],
-    'member' => [
-        'name' => 'Members',
+    'student' => [
+        'name' => 'Students',
         'icon' => 'users',
-        'url' => '/members'
-    ],
-    'studio' => [
-        'name' => 'Studio',
-        'icon' => 'credit-card',
-        'url' => '/studio'
+        'url' => '/students'
     ],
     'payment' => [
         'name' => 'Payments',
@@ -26,8 +21,23 @@ return [
         'icon' => 'award',
         'url' => '/plans'
     ],
+    /* 'branch' => [
+        'name' => 'Branches',
+        'icon' => 'git-branch',
+        'url' => '/branches'
+    ],
+    'class' => [
+        'name' => 'Classes',
+        'icon' => 'pen-tool',
+        'url' => '/classes'
+    ],
+    'studio' => [
+        'name' => 'Studio Settings',
+        'icon' => 'settings',
+        'url' => '/studio'
+    ], */
     'setting' => [
-        'name' => 'Settings',
+        'name' => 'Account Settings',
         'icon' => 'settings',
         'url' => '/settings'
     ],
