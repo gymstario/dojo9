@@ -24,42 +24,16 @@
                         <div id="card-element"></div>
                     </div>
                     <div class="col-12">
-                        <div class="custom-control custom-checkbox d-flex justify-content-start">
-                            <input type="checkbox" class="custom-control-input" id="rememberMe">
-                            <label class="custom-control-label text-grey-5 fs-13" for="rememberMe">I have read and agree to the <a href="#" class="text-2">terms and conditions.</a></label>
+                        <div class="custom-control justify-content-start">
+                            <input type="checkbox" id="rememberMe">
+                            <label class="text-grey-5 fs-13" for="rememberMe">I have read and agree to the <a href="#" class="text-2">terms and conditions.</a></label>
                         </div>
                     </div>
                     <div class="col-12">
                         <button class="btn btn-brand btn-block text-center">Sign up</button>
                     </div>
-                    <!--
-                    <div class="col-12">
-                        <div class="rui-sign-or mt-2 mb-5">or</div>
-                    </div>
-                    <div class="col-12">
-                        <ul class="rui-social-links">
-                            <li>
-                                <a href="dashboard.html" class="rui-social-github">
-                                    <span class="fab fa-github"></span>
-                                    Github
-                                </a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html" class="rui-social-facebook">
-                                    <span class="fab fa-facebook-f"></span>
-                                    Facebook
-                                </a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html" class="rui-social-google">
-                                    <span class="fab fa-google"></span>
-                                    Google
-                                </a>
-                            </li>
-                        </ul>
-                    </div> -->
                     <div class="col-12 text-center text-grey-5 fs-13">
-                        Already have an account? <a href="sign-in.html" class="text-2">Sign In</a>
+                    Already have an account? <a href="{{ route('login') }}" class="text-2">Sign In</a>
                     </div>
                 </div>
             {{ Form::close() }}

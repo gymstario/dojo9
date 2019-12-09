@@ -16,9 +16,9 @@
             {!! field_wrap($errors, "Email Address", "email", "email", [], "col-12") !!}
             {!! field_wrap($errors, "Password", "password", "password", [], "col-12") !!}
             <div class="col-sm-6">
-                <div class="custom-control custom-checkbox d-flex justify-content-start">
+                <div class="custom-control d-flex justify-content-start">
                     <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} id="remember">
-                    <label class="custom-control-label fs-13" for="rememberMe">Remember me</label>
+                    <label class="fs-13" for="rememberMe">Remember me</label>
                 </div>
             </div>
             @if (Route::has('password.request'))
@@ -59,7 +59,7 @@
         </div>
     {{ Form::close() }}
     <div class="mt-20 text-grey-5">
-        Don't you have an account? <a href="{{ route("auth.plans.get") }}" class="text-2">Sign Up</a>
+        Don't you have an account? <a href="{{ route("plans.admin.list") }}" class="text-2">Sign Up</a>
     </div>
 </div>
 

@@ -4,16 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Plan;
 use App\Http\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Requests\CreatePlanRequest;
 
 class PlansController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    //
     public function index()
     {
         $id = auth()->user()->member->studio->stripe_account_id;

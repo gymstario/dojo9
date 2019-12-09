@@ -21,7 +21,7 @@
                                 <div class="col-md-4 col-xs-4">
                                     <div class="custom-control custom-checkbox"></div>
                                     <input type="checkbox" name="days[]" value="{{ $key }}" />
-                                    <label class="custom-control-label">{{ $val }}</label>
+                                    <label>{{ $val }}</label>
                                 </div>
                                 @endforeach
                             </div>

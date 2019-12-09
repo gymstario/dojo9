@@ -463,7 +463,6 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
 
     $value = isset($data[$dataName]) ? $data[$dataName] : old($name);
 
-
     if ($type == "select") {
         $options = $options;
         $input = Form::select($name, $options, $value, $tmp);
@@ -477,6 +476,8 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
         $input = Form::text($name, $value, $tmp);
     } else if ($type == "date") {
         $input = Form::date($name, $value, $tmp);
+    } else if ($type == "password") {
+        $input = Form::password($name, $tmp);
     } else if ($type == "file") {
         $input = Form::file($name, $tmp);
     } else if ($type == "phone") {
@@ -500,7 +501,7 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
     return '
     <div class="' . $class . ($errors->has($errorName) ? " has-danger" : "") . '">
         ' . ($label != '' ? '<label class="form-control-label">' . $label . '</label>' : '') .
-        $input . '
+    $input . '
         <div class="form-control-feedback">' . str_replace('.', ' ', $errors->first($errorName)) . '</div>
     </div>';
 }
@@ -538,7 +539,7 @@ function field_wrap_edit($data, $dataName, $errors, $label, $name, $type = "", $
 
     <div class="form-group ' . $class . ($errors->has($name) ? " has-danger" : "") . '">
         ' .
-        $input . '
+    $input . '
         <div class="form-control-feedback">' . $errors->first($name) . '</div>
     </div>';
 }
@@ -712,7 +713,6 @@ function get_alert($type = 'outline', $header = '', $message = '', $class = '')
     }
 }
 
-
 function field_brand($data, $errors, $class = '', $name = 'brand')
 {
     $user = auth()->user();
@@ -730,7 +730,6 @@ function get_prop_value($array, $field)
     }
     return "";
 }
-
 
 function limitPercentage($limit, $unused)
 {
@@ -819,7 +818,7 @@ function create_support_mailto($subject, $body)
 function throw_exception($message)
 {
     $error = \Illuminate\Validation\ValidationException::withMessages([
-        'message' => $message
+        'message' => $message,
     ]);
     throw $error;
 }

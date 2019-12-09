@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use bitspro\StripeMarketplace\StripeMarketplaceManager;
 use App\Http\Models\Plan;
 use App\Http\Models\Product;
+use bitspro\StripeMarketplace\StripeMarketplaceManager;
 
 class AdminController extends Controller
 {

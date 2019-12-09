@@ -296,7 +296,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-nightmode-toggle" id="toggleMobileNightMode">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileNightMode">
+                                        <label class="dropdown-item" for="toggleMobileNightMode">
                                             <span data-feather="moon" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Night Mode</span>
                                             <span class="rui-dropdown-circle"></span>
@@ -306,7 +306,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-spotlightmode-toggle" id="toggleMobileSpotlightMode">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileSpotlightMode">
+                                        <label class="dropdown-item" for="toggleMobileSpotlightMode">
                                             <span data-feather="square" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Spotlight Mode</span>
                                             <span class="rui-dropdown-circle"></span>
@@ -316,7 +316,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-sectionLines-toggle" id="toggleMobileSectionLines">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileSectionLines">
+                                        <label class="dropdown-item" for="toggleMobileSectionLines">
                                             <span data-feather="layout" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Show section lines</span>
                                             <span class="rui-dropdown-circle"></span>
@@ -327,7 +327,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-darkSidebar-toggle" id="toggleMobileDarkSidebar">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileDarkSidebar">
+                                        <label class="dropdown-item" for="toggleMobileDarkSidebar">
                                             <span data-feather="sidebar" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Dark</span>
                                             <span class="rui-dropdown-circle"></span>
@@ -337,7 +337,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-staticSidebar-toggle" id="toggleMobileStaticSidebar">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileStaticSidebar">
+                                        <label class="dropdown-item" for="toggleMobileStaticSidebar">
                                             <span data-feather="sidebar" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Static</span>
                                             <span class="rui-dropdown-circle"></span>
@@ -348,7 +348,7 @@
                                 <li>
                                     <div class="custom-control custom-switch dropdown-item-switch">
                                         <input type="checkbox" class="custom-control-input rui-darkNavbar-toggle" id="toggleMobileDarkNavbar">
-                                        <label class="dropdown-item custom-control-label" for="toggleMobileDarkNavbar">
+                                        <label class="dropdown-item" for="toggleMobileDarkNavbar">
                                             <span data-feather="menu" class="rui-icon rui-icon-stroke-1_5"></span>
                                             <span>Dark</span>
                                             <span class="rui-dropdown-circle"></span>

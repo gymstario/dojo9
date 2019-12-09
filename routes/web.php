@@ -11,15 +11,12 @@
 |
  */
 
-Auth::routes(['verify' => true]);
-Route::get('/subscription', ['as' => 'auth.plans.get', 'uses' => 'PlansController@getAdminPlans']);
 Route::get('admin/setup', ['as' => 'admin.setup.get', 'uses' => 'AdminController@setup']);
-
+Route::get('/pricing', ['as' => 'plans.admin.list', 'uses' => 'PlansController@getAdminPlans']);
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', ['as' => 'auth.logout', 'uses' => 'Auth\LoginController@logout']);
@@ -47,3 +44,6 @@ Route::middleware(['owner', 'auth'])->group(function () {
 });
 
 // Route::get('/business/setup', ['as' => 'auth.business.setup.get', 'uses' => 'CommerceController@getAgencyRequest']);
+
+Auth::routes(['verify' => true]);
+Route::get('/{any}', ['as' => 'frontend.page', 'uses' => 'FrontEndController@getPage']);

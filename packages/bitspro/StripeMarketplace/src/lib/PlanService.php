@@ -2,7 +2,6 @@
 
 namespace bitspro\StripeMarketplace\lib;
 
-use Illuminate\Support\Facades\Log;
 use Stripe\Plan;
 
 class PlanService
@@ -27,7 +26,7 @@ class PlanService
                 'interval_count' => $plan['interval_count'],
                 'amount' => $plan['amount'] / 100,
                 'product' => $product,
-                'attributes' => json_decode($meta, true)
+                'attributes' => json_decode($meta, true),
             ];
         }
         return ['has_more' => $plans['has_more'], 'data' => $return];
@@ -46,7 +45,7 @@ class PlanService
             'active' => $plan['active'],
             'interval_count' => $plan['interval_count'],
             'amount' => $plan['amount'] / 100,
-            'attributes' => json_decode($meta, true)
+            'attributes' => json_decode($meta, true),
         ];
     }
 
@@ -68,7 +67,7 @@ class PlanService
         } else {
             $plan = Plan::update($stripeId, $data);
         }
-        return $plan;
+        return $plan['id'];
     }
 
     public static function delete($id)

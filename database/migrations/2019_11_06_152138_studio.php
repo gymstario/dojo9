@@ -47,6 +47,7 @@ class Studio extends Migration
                 $table->increments('id');
                 $table->integer('studio_id');
                 $table->string('stripe_product_id')->nullable();
+                $table->string('email');
                 $table->string('name');
                 $table->string('phone')->nullable();
                 $table->string('address')->nullable();
