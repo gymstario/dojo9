@@ -489,6 +489,12 @@ function field_wrap($errors, $label, $name, $type = "", $options = [], $class = 
     } else if ($type == "tax") {
         $tmp['data-inputmask'] = "'mask': '999-99-9999'";
         $input = Form::text($name, $value, $tmp);
+    } else if ($type == "address") {
+        $tmp["id"] = "autocomplete";
+        $tmp["placeholder"] = "Enter your address";
+        $tmp["onfocus"] = "geolocate()";
+        $tmp["autocomplete"] = "address-level4";
+        $input = Form::text($name, $value, $tmp) . '<div class="address-compnents"></div>';
     } else {
         $input = Form::text($name, $value, $tmp);
     }

@@ -79,6 +79,7 @@
 <script src="{{ asset('assets/js/vendor.js') }}"></script>
 <script src="{{ asset('assets/js/rootui.js') }}"></script>
 <script src="{{ asset('assets/js/rootui-init.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env("GOOGLE_MAPS_KEY") }}&libraries=places&callback=initAutocomplete" async defer></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>
 @yield('js')
 @if(session('showSetupModal') === true)

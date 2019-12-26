@@ -49,5 +49,4 @@
         </table>
     </div>
 </div>
-@include('studio.branch.edit')
 @endsection

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class BranchRequest extends FormRequest
 {
@@ -29,9 +29,12 @@ class BranchRequest extends FormRequest
             'phone' => 'required',
             'email' => 'required|email',
             'address' => 'required',
+            'street' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'zip' => 'required|digits:5',
+            'zip' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
         ];
     }
 }

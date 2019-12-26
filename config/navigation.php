@@ -6,8 +6,8 @@ return [
         'icon' => 'home',
         'url' => '/dashboard'
     ],
-    'student' => [
-        'name' => 'Students',
+    'Members' => [
+        'name' => 'Members',
         'icon' => 'users',
         'url' => '/students'
     ],
@@ -19,7 +19,34 @@ return [
     'plan' => [
         'name' => 'Plans',
         'icon' => 'award',
-        'url' => '/plans'
+        'url' => '/plans',
+     ],
+     'notify' => [
+         'name' => 'Notify',
+         'icon' => 'award',
+         'url' => '/notify'
+     ],
+     'account' => [
+        'name' => 'Account',
+        'icon' => 'award',
+        'url' => '/account',
+        'items' => [
+            'profile' => [
+                'name' => 'Profile',
+                'icon' => '',
+                'url' => '/profile'
+            ],
+            'billing' => [
+                'name' => 'Billing',
+                'icon' => '',
+                'url' => '/billing'
+            ],
+            'merchantservice' => [
+                'name' => 'Merchant Service',
+                'icon' => '',
+                'url' => '/merchantservice'
+            ]
+        ]
     ],
     /* 'branch' => [
         'name' => 'Branches',
@@ -37,13 +64,21 @@ return [
         'url' => '/studio'
     ], */
     'setting' => [
-        'name' => 'Account Settings',
+        'name' => 'Settings',
         'icon' => 'settings',
-        'url' => '/settings'
+        'url' => '/settings',
+        'items' => [
+            'waivers' => [
+                'name' => 'Waivers',
+                'icon' => '',
+                'url' => '/waivers'
+            ],
+            'payments' => [
+                'name' => 'Payments',
+                'icon' => '',
+                'url' => '/payments'
+            ]
+        ]
     ],
-    'add' => [
-        'name' => 'Add',
-        'icon' => 'plus-circle',
-        'url' => '#add'
-    ],
+   
 ];

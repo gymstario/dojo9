@@ -38,6 +38,7 @@ Route::middleware(['owner', 'auth'])->group(function () {
 
     Route::get('/branches', ['as' => 'branch.list', 'uses' => 'BranchController@index']);
     Route::post('/branches', ['as' => 'branch.post', 'uses' => 'BranchController@store']);
+    Route::get('/branch/add', ['as' => 'branch.create', 'uses' => 'BranchController@create']);
 
     Route::get('/classes', ['as' => 'class.list', 'uses' => 'ClassController@index']);
     Route::post('/classes', ['as' => 'class.post', 'uses' => 'ClassController@store']);

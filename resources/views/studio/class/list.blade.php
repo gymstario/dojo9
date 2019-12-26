@@ -49,5 +49,4 @@
         </table>
     </div>
 </div>
-@include('studio.class.edit')
 @endsection

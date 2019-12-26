@@ -11,7 +11,6 @@
             </div>
         </div>
     </div>
-    php artisan serve
     <div class="rui-page-content">
         <div class="container-fluid">
             @if(count($plans['data']) > 0)
