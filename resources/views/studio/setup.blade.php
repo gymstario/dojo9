@@ -3,13 +3,13 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title display-3">Studio Setup</h5>
+                <!-- <h5 class="modal-title display-3">Studio Setup</h5> -->
             </div>
             {{ Form::open(['enctype' => 'multipart/form-data', 'route' => 'studio.post', 'class' => 'form rui-sign-form rui-sign-form-cloud']) }}
             <div class="modal-body">
                 @include('studio.partial.studio')
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer float-left">
                 <button type="submit" class="btn btn-brand">
                     Setup Studio
                 </button>

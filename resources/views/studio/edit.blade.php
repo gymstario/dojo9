@@ -17,7 +17,7 @@
         <div class="container-fluid">
             {{ Form::open(['enctype' => 'multipart/form-data', 'route' => 'studio.post', 'class' => 'form rui-sign-form rui-sign-form-cloud']) }}
             @include('studio.partial.studio')
-            <button type="submit" class="btn btn-brand btn-large">
+            <button type="submit" class="btn btn-brand btn-large" style="margin-top: 20px;">
                 Save Studio
             </button>
             {{ Form::close() }}

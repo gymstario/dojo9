@@ -4,11 +4,25 @@
             <ul>
                 @foreach(config('navigation') as $nav)
                 <li>
-                    <a href="{{ $nav['url'] }}">
+                    <a href="{{ $nav['url'] }}" class="yay-sub-toggle">
                         <span class="yay-icon"><span data-feather="{{ $nav['icon'] }}" class="rui-icon rui-icon-stroke-1_5"></span></span>
                         <span>{{ $nav['name'] }}</span>
                         <span class="rui-yaybar-circle"></span>
-                    </a>
+                      </a>
+                     @if(isset($nav['items']))
+                     
+                    <ul class="yay-submenu dropdown-triangle">
+                        @foreach($nav['items'] as $subNav)
+                        <li>
+                          <a href="#">
+                            {{ $subNav['name'] }}
+                          </a>
+                        </li>
+                        
+                        @endforeach
+                        </ul>
+                    @endif 
+                   
                 </li>
                 @endforeach
                 </ul>

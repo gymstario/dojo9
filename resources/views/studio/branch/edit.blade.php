@@ -1,3 +1,7 @@
+@extends('layouts.main')
+@section('title', 'Reset Password')
+@section('menu','member')
+@section('content')
 <div class="modal modal-branch" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

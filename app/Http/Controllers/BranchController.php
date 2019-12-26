@@ -27,6 +27,7 @@ class BranchController extends Controller
     public function create()
     {
         //
+        return view('studio.branch.edit');
     }
 
     /**
