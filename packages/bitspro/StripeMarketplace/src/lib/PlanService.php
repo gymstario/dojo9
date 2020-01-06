@@ -32,9 +32,9 @@ class PlanService
         return ['has_more' => $plans['has_more'], 'data' => $return];
     }
 
-    public static function get($id)
+    public static function get($id, $stripeAccountId = null)
     {
-        $plan = Plan::retrieve($id);
+        $plan = Plan::retrieve($id, ['stripe_account' => $stripeAccountId]);
         $meta = json_encode($plan['metadata']);
         return [
             'stripeId' => $plan['id'],

@@ -10,13 +10,12 @@
             {{ Form::open(['route' => 'plans.post', 'method' => 'POST', 'class' => 'form rui-sign-form rui-sign-form-cloud']) }}
             <div class="modal-body">
                 <div class="row vertical-gap sm-gap">
-                    {!! field_wrap($errors, "Name", "name", "", [], "col-md-12 col-xs-12", $plan ?? [], 'name') !!}
-                    {!! field_wrap($errors, "Type", "type", "select", ["day" => "Daily", "week" => "Weekly", "month" => "Monthly", "year" => "Yearly"], "col-md-6 col-xs-12", $plan ?? [], 'type') !!}
-                    {!! field_wrap($errors, "Interval", "interval", "number", [], "col-md-6 col-xs-12", $plan ?? [], 'interval') !!}
+                    {!! field_wrap($errors, "Name", "name", "", [], "col-md-6 col-xs-12", $plan ?? [], 'name') !!}
+                    {!! field_wrap($errors, "Interval", "interval", "select", ["day" => "Daily", "week" => "Weekly", "month" => "Monthly", "year" => "Yearly"], "col-md-6 col-xs-12", $plan ?? [], 'type') !!}
                     {!! field_wrap($errors, "Amount", "amount", "", [], "col-md-6 col-xs-12", $plan ?? [], 'amount') !!}
                     {!! field_wrap($errors, "Status", "active", "select", [true => "Active", false => "Deactive"], "col-md-6 col-xs-12", $plan ?? [], 'address') !!}
-                    {!! field_wrap($errors, "Target", "target", "select", $products, "col-md-12 col-xs-12", $plan ?? [], 'address') !!}
-                    <div class="col-md-12 col-xs-12">
+                    {!! field_wrap($errors, "Target", "target", "select", $products, "col-md-6 col-xs-12", $plan ?? [], 'address') !!}
+                    <div class="col-md-12 col-xs-12 px-20">
                         <label class="form-control-label">Plan Attributes</label>
                         <div class="fields">
                             <div class="input-group" style="margin-bottom: 18px;">
@@ -34,7 +33,7 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-brand">
-                    Setup Studio
+                    Save Plan
                 </button>
             </div>
             {{ Form::close() }}

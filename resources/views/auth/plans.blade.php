@@ -11,38 +11,31 @@
                 </h1>
             </div>
         </div>
-        <div class="pricing-2" style="width: 100%">
+        <div class="pricing-1" style="width: 100%">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
-                        <div class="block block-pricing block-plain">
-                            <div class="table">
-                                <h6 class="category">&nbsp;</h6>
-                                <h1 class="block-caption">&nbsp;</h1>
-                                <ul>
-                                    @foreach($plans[0]["attributes"] as $key => $attribute)
-                                    <li>{{ $key }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                     @foreach($plans as $key => $plan)
-                    <div class="col-md-3">
+                    <div class="col-md-4 col-offset-md-4">
                         <div class="block block-pricing block-raised">
-                            <div class="table {{ $key == 1 ? 'table-danger' : '' }}">
-                            <h6 class="category">{{ $plan['name'] }}</h6>
-                            <h1 class="block-caption">@currency($plan["amount"] / 100)</h1>
-                                <ul>
-                                    @foreach($plans[0]["attributes"] as $keyAttr => $attribute)
-                                    <li>{{ $attribute }}</li>
-                                    @endforeach
-                                </ul>
-                                <a href="{{ route("register") }}?plan={{ $plan["stripeId"] }}&role={{ $plan["role"] }}" class="btn {{ $key == 1 ? 'btn-white' : 'btn-danger' }} btn-raise btn-round">BUY NOW</a>
-                            </div>
+                            <form action="{{ route("register") }}" method="GET">
+                                <input type="hidden" name="plan" value="{{ $plan["stripeId"] }}" />
+                                <input type="hidden" name="role" value="{{ $plan["role"] }}" />
+                                <div class="table table-danger">
+                                    <h6 class="category">{{ $plan['name'] }}</h6>
+                                    <h1 class="block-caption"><small>$</small>{{ $plan["amount"] / 100 }} <small>/ location</small></h1>
+                                    <ul>
+                                        @foreach($plan["attributes"] as $key => $attribute)
+                                        <li>@if($attribute === '*') Any @else{{ $attribute }} @endif <b>{{ $key }}</b></li>
+                                        @endforeach
+                                        <li><input type="number" name="quantity" value="1" style="width: 74px;font-size: 1.3em; color: #708090; text-align: center" min="1" /></li>
+                                    </ul>
+                                    <button type="submit" class="btn btn-white btn-raise btn-round">BUY NOW</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     @endforeach
+
                 </div>
             </div>
         </div>

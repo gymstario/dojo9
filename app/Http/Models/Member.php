@@ -2,9 +2,9 @@
 
 namespace App\Http\Models;
 
+use App\Mail\StudentInvitation;
 use Illuminate\Database\Eloquent\Model;
-use bitspro\StripeMarketplace\StripeMarketplaceManager;
-
+use Mail;
 
 class Member extends Model
 {
@@ -25,9 +25,14 @@ class Member extends Model
         return $this->hasMany('App\Http\Models\Product');
     }
 
-    public static function add($data, $setupStripe = false)
+    public static function store($data)
     {
-        $objMember = new Member;
+        $objMember = Member::where('user_id', $data['userId'])->get();
+        if ($objMember->count() > 0) {
+            $objMember = $objMember->first();
+        } else {
+            $objMember = new Member;
+        }
         $objMember->user_id = $data['userId'];
         $objMember->type = $data['type'];
         $objMember->first_name = $data['firstName'];
@@ -38,7 +43,7 @@ class Member extends Model
         $objMember->state = $data['state'];
         $objMember->zip = $data['zip'];
         $objMember->country = $data['country'];
-        $objMember->ssn_last_4 = $data['ssn'];
+        $objMember->ssn = $data['ssn'];
         $objMember->title = $data['title'];
         $objMember->email = $data['email'];
         $objMember->phone = $data['phone'];
@@ -46,15 +51,28 @@ class Member extends Model
         if (!$objMember->save()) {
             return false;
         }
-        if ($setupStripe) {
-            $objStripe = new StripeMarketplaceManager();
-            $customerId = $objStripe->Customer->save($data['firstName'] . ' ' . $data['lastName'], $data['email'], $data['stripeToken']);
-            if ($customerId === false) {
-                $objMember->strip_customer_id = $customerId;
-                $objMember->save();
-                return false;
-            }
+        return $objMember;
+    }
+
+    public static function storeStudent($data)
+    {
+        $objMember = new Member;
+        $objMember->studio_id = $data['studio_id'];
+        $objMember->type = 'Student';
+        $objMember->first_name = $data['firstName'];
+        $objMember->last_name = $data['lastName'];
+        $objMember->dob = $data['dob'];
+        $objMember->rank = $data['rank'];
+        $objMember->email = $data['email'];
+        $objMember->phone = $data['phone'];
+        $objMember->photo = $data['photo'];
+        $objMember->stripe_plan_id = $data['stripe_plan_id'];
+        $objMember->enrolment = isset($data['enrolment']) ? $data['enrolment'] : null;
+        if (!$objMember->save()) {
+            return false;
         }
+        $name = $data['firstName'] . ' ' . $data['lastName'];
+        Mail::to($data['email'])->send(new StudentInvitation($name, $data['studioName'], env('APP_URL') . '/enrolment/' . encrypt($objMember->id)));
         return $objMember;
     }
 }

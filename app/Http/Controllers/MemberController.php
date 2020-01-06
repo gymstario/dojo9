@@ -3,29 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Member;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
+use App\Http\Models\Plan;
 use App\Http\Requests\MemberCreateRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MemberController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('owner');
+        if (!Gate::allows('is-owner')) {
+            return redirect()->route('dashboard.get');
+        }
     }
 
     public function index()
     {
-        if (!Gate::allows('is-owner')) {
-            return redirect('401');
-        }
-        return view('members.list');
+        $members = Member::where('studio_id', auth()->user()->member->studio->id)->paginate(env('PAGE_SIZE'));
+        return view('members.list', ['members' => $members]);
     }
-
 
     public function create()
     {
         //
+        $id = auth()->user()->member->studio->stripe_account_id;
+        $plans = Plan::getOwnerPlans($id)['data'];
+        $plans = array_combine(array_column($plans, 'stripeId'), array_column($plans, 'name'));
+        return view('members.create', ['plans' => $plans]);
     }
 
     /**
@@ -36,24 +42,32 @@ class MemberController extends Controller
      */
     public function store(MemberCreateRequest $request)
     {
-        $member = Member::create([
+        try {
+            $input = $request->all();
+            if ($request->file('photo') !== null) {
+                $input['photo'] = $request->file('photo')->storeAs('public/student', auth()->user()->id . '-front.' . $request->file('photo')->extension());
+            }
 
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'dob'   => $request->dob,
-            'address'   => $request->address,
-            'city'  => $request->city,
-            'state' => $request->state,
-            'zip'   => $request->zip,
-            'country' => $request->country,
-            'ssn_last_4' => $request->ssn_last_4,
-            'title' => $request->title,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'strip_customer_id' => $request->strip_customer_id,
-            // 'enrolment' => $request->enrolment
+            $member = Member::storeStudent([
+                'studio_id' => auth()->user()->member->studio->id,
+                'studioName' => auth()->user()->member->studio->name,
+                'firstName' => $input['firstName'],
+                'lastName' => $input['lastName'],
+                'email' => $input['email'],
+                'phone' => $input['phone'],
+                'dob' => $input['dob'],
+                'rank' => $input['rank'],
+                'enrolment' => $input['enrolment'],
+                'stripe_plan_id' => $input['plan'],
+                'photo' => isset($input['photo']) ? $input['photo'] : null,
+            ]);
+            return redirect()->route('members.list.get')->with(['success' => 'A new member has been added successfully']);
+        } catch (\Exception $e) {
+            dd($e);
+            Log::error($e);
+            return redirect()->back()->with(['error' => 'An unexpected error occured. Please try again.']);
+        }
 
-        ]);
     }
 
     /**

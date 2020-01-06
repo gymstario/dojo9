@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreatePlanRequest extends FormRequest
 {
@@ -27,7 +27,6 @@ class CreatePlanRequest extends FormRequest
         return [
             //
             'name' => 'required',
-            'type' => 'required',
             'interval' => 'required',
             'amount' => 'required',
             'active' => 'required',

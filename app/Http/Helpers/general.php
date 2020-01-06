@@ -816,6 +816,61 @@ function get_mcc_dropdown()
     return $output;
 }
 
+function get_gender_dropdown()
+{
+    $items = [
+        'Male',
+        'Female',
+        'Transmale',
+        'Transfemale',
+        'Genderqueer',
+        'Something Else',
+        'Decline to Answer',
+    ];
+    $output = [];
+    foreach ($items as $mcc) {
+        $output[$mcc] = $mcc;
+    }
+    return $output;
+}
+
+function get_rank_dropdown()
+{
+    $items = [
+        'White Belt',
+        'Yellow Belt',
+        'Orange Belt',
+        'Green Belt',
+        'Blue Belt',
+        'Purple Belt',
+        'Brown Belt',
+        'Red Belt',
+        'Black Belt',
+    ];
+    $output = [];
+    foreach ($items as $mcc) {
+        $output[$mcc] = $mcc;
+    }
+    return $output;
+}
+
+function get_entity_dropdown()
+{
+    $items = [
+        'Sole Proprietor',
+        'General Partnership',
+        'Limited Partnership',
+        'S-Corp',
+        'C-Corp',
+        'LLC',
+    ];
+    $output = [];
+    foreach ($items as $mcc) {
+        $output[$mcc] = $mcc;
+    }
+    return $output;
+}
+
 function create_support_mailto($subject, $body)
 {
     return 'mailto:support@gymstar.com?subject=' . $subject . '&body=Your Custom Message:%20%0A%20%0A%20%0A%20%0A' . $body;

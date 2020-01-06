@@ -10,6 +10,9 @@ class PlansController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->member === null) {
+            return redirect()->route('studio.get');
+        }
         $id = auth()->user()->member->studio->stripe_account_id;
         $plans = Plan::getOwnerPlans($id);
         $products = [];

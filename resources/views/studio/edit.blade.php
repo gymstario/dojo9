@@ -5,11 +5,8 @@
     <div class="rui-page-title">
         <div class="container-fluid">
             <h1 class="display-3">
-                Studio Setup
+                Account | <span style="font-size: 0.7em;">Merchant Service</span>
             </h1>
-            <div>
-                <button class="btn btn-primary btn-property">Branchesain</button>
-            </div>
         </div>
     </div>
 
@@ -23,4 +20,18 @@
             {{ Form::close() }}
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.business-entity').change(function() {
+                if($(this).val() === 'Sole Proprietor') {
+                    $('.contact-information').hide();
+                } else {
+                    $('.contact-information').show();
+                }
+            });
+        });
+    </script>
 @endsection

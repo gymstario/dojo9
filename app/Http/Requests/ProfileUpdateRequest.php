@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MemberCreateRequest extends FormRequest
+class ProfileUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,20 @@ class MemberCreateRequest extends FormRequest
      */
     public function rules()
     {
+        if ($this->get('new_password') === null || $this->get('current_password')) {
+            return [
+                'firstName' => 'required',
+                'lastName' => 'required',
+                'email' => 'required|email',
+            ];
+        }
         return [
-
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
-            'enrolment' => 'required|date',
-            'plan' => 'required',
-            'gender' => 'required',
-            'rank' => 'required',
+            'current_password' => 'required',
+            'new_password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+
     }
 }

@@ -2,7 +2,6 @@
 
 namespace bitspro\StripeMarketplace\lib;
 
-use Illuminate\Support\Facades\Log;
 use Stripe\Subscription;
 
 class SubscriptionService
@@ -22,7 +21,8 @@ class SubscriptionService
                 'customer' => $subscription['customer'],
                 'plan' => $subscription['plan'],
                 'quantity' => $subscription['quantity'],
-                'start_date' => $subscription['start_date'],
+                'start_date' => date(env('DATE_FORMAT'), $subscription['start_date']),
+                'subscription_beings' => date(env('DATE_FORMAT'), $subscription['start_date']),
                 'status' => $subscription['status'],
             ];
         }
@@ -34,14 +34,17 @@ class SubscriptionService
         return Subscription::retrieve($id);
     }
 
-    public static function save($customerId, $planId, $stripeAccountId = null, $stripeId = null)
+    public static function save($customerId, $planId, $quantity = 1, $startDate = null, $stripeAccountId = null, $stripeId = null)
     {
         $data = [
             "customer" => $customerId,
             "items" => [
-                ["plan" => $planId],
+                ["plan" => $planId, "quantity" => $quantity],
             ],
         ];
+        if ($startDate !== null) {
+            $data["trial_end"] = $startDate;
+        }
         if ($stripeId == null || $stripeId == '') {
             if ($stripeAccountId === null) {
                 $subscription = Subscription::create($data);

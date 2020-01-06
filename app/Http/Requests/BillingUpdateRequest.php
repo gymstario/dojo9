@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MemberCreateRequest extends FormRequest
+class BillingUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,11 @@ class MemberCreateRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'enrolment' => 'required|date',
-            'plan' => 'required',
-            'gender' => 'required',
-            'rank' => 'required',
+            //
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email'],
+            'stripeToken' => ['required', 'string', 'min:8'],
         ];
     }
 }

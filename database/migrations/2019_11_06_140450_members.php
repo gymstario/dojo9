@@ -16,28 +16,29 @@ class Members extends Migration
         if (!Schema::hasTable('members')) {
             Schema::create('members', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('user_id');
+                $table->integer('user_id')->nullable();
+                $table->foreign('user_id')->references('id')->on('users');
+                $table->integer('studio_id')->nullable();
+                $table->foreign('studio_id')->references('id')->on('studios');
                 $table->string('type')->default('student');
                 $table->string('first_name');
                 $table->string('last_name');
-                $table->date('dob');
-                $table->string('address');
-                $table->string('city');
-                $table->string('state');
-                $table->string('zip');
-                $table->string('country');
-                $table->string('ssn_last_4')->nullable();
+                $table->date('dob')->nullable();
+                $table->string('address')->nullable();
+                $table->string('city')->nullable();
+                $table->string('state')->nullable();
+                $table->string('zip')->nullable();
+                $table->string('country')->nullable();
+                $table->string('rank')->nullable();
+                $table->string('ssn')->nullable();
                 $table->string('title')->nullable();
                 $table->string('email');
                 $table->string('phone');
+                $table->string('photo')->nullable();
                 $table->string('strip_customer_id')->nullable();
                 $table->date('enrolment')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
-            });
-
-            Schema::table('members', function (Blueprint $table) {
-                //  $table->foreign('user_id')->references('id')->on('users');
             });
         }
 
@@ -45,7 +46,9 @@ class Members extends Migration
             Schema::create('member_dependents', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('user_id');
+                $table->foreign('user_id')->references('id')->on('users');
                 $table->integer('member_id');
+                $table->foreign('member_id')->references('id')->on('members');
                 $table->string('first_name');
                 $table->string('last_name');
                 $table->date('dob');
@@ -54,10 +57,6 @@ class Members extends Migration
                 $table->date('enrolment');
                 $table->timestamps();
                 $table->softDeletes();
-            });
-
-            Schema::table('member_dependents', function (Blueprint $table) {
-                //  $table->foreign('member_id')->references('id')->on('members'); // hasMany
             });
         }
     }

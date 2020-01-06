@@ -1,16 +1,18 @@
 @extends('layouts.main')
-@section('title', 'Reset Password')
-@section('menu','member')
+@section('title', 'Plans')
+@section('menu','plan')
 @section('content')
-    <div class="rui-page-title">
-        <div class="container-fluid">
-            <h1 class="member-heading">Plans</h1>
-            <span><input type="text" placeholder="Search" class="form-control set-search-input"><span class="fa fa-search form-control-feedback set-icon-input"></span></span>
-            <div>
-                <button class="btn btn-primary btn-property" data-toggle="modal" data-target=".modal-plan">Add Plan</button>
-            </div>
+<div class="rui-page-title">
+    <div class="container-fluid" style="display:flex">
+        <div style="flex: 1">
+            <h1 class="display-3">
+                Plans
+            </h1>
         </div>
+        <button type="button" class="btn btn-success btn-sm btn-uniform my-0" data-toggle="modal" data-target=".modal-plan">Create Plan</button>
     </div>
+</div>
+
     <div class="rui-page-content">
         <div class="container-fluid">
             @if(count($plans['data']) > 0)

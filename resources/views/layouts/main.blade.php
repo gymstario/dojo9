@@ -70,10 +70,9 @@
                 @yield('content')
             </main>
         </div>
-        @include('studio.setup')
         @auth
-        @include('layouts.footer')
-    @endauth
+            @include('layouts.footer')
+        @endauth
 </div>
 </div>
 <script src="{{ asset('assets/js/vendor.js') }}"></script>

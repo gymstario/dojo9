@@ -29,12 +29,10 @@ class BranchRequest extends FormRequest
             'phone' => 'required',
             'email' => 'required|email',
             'address' => 'required',
-            'street' => 'required',
+            'address' => 'required',
             'city' => 'required',
             'state' => 'required',
             'zip' => 'required',
-            'latitude' => 'required',
-            'longitude' => 'required',
         ];
     }
 }

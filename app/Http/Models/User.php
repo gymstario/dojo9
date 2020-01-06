@@ -2,11 +2,10 @@
 
 namespace App\Http\Models;
 
+use bitspro\StripeMarketplace\StripeMarketplaceManager;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use bitspro\StripeMarketplace\StripeMarketplaceManager;
-use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -18,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'role', 'strip_customer_id'
+        'first_name', 'last_name', 'email', 'password', 'role', 'strip_customer_id',
     ];
 
     /**
@@ -79,7 +78,33 @@ class User extends Authenticatable implements MustVerifyEmail
                 'customerId' => $customerId,
                 'planId' => $planId,
                 'userId' => $objUser->id,
+                'quantity' => (int) $data['quantity'],
             ]);
+            if ($subscriptionId !== false) {
+                return $objUser;
+            }
+        }
+        return false;
+    }
+
+    public static function addStudent($data, $objMember)
+    {
+        $objStripe = new StripeMarketplaceManager();
+        $customerId = $objStripe->Customer->save($data['firstName'] . ' ' . $data['lastName'], $data['email'], $data['stripeToken'], $data['accountId']);
+        if ($customerId !== false) {
+            $objMember->strip_customer_id = $customerId;
+            $objMember->save();
+            $objUser = User::create([
+                'first_name' => $data['firstName'],
+                'last_name' => $data['lastName'],
+                'email' => $data['email'],
+                'strip_customer_id' => $customerId,
+                'password' => bcrypt($data['password']),
+                'role' => $data['role'],
+            ]);
+            $planId = $data['plan'];
+            $objStripe = new StripeMarketplaceManager();
+            $subscriptionId = $objStripe->Subscription->save($customerId, $planId, 1, strtotime($objMember->enrolment), $data['accountId']);
             if ($subscriptionId !== false) {
                 return $objUser;
             }

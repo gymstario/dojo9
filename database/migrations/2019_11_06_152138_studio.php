@@ -17,6 +17,7 @@ class Studio extends Migration
             Schema::create('studios', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('member_id');
+                $table->foreign('member_id')->references('id')->on('members');
                 $table->string('name');
                 $table->string('phone');
                 $table->string('email');
@@ -25,9 +26,9 @@ class Studio extends Migration
                 $table->string('state');
                 $table->string('zip');
                 $table->string('country');
-                $table->string('tax_id');
+                $table->string('tax_id')->nullable();
                 $table->string('mcc');
-                $table->string('url');
+                $table->string('url')->nullable();
                 $table->longText('description');
                 $table->dateTime('date');
                 $table->string('ip');
@@ -36,16 +37,13 @@ class Studio extends Migration
                 $table->timestamps();
                 $table->softDeletes();
             });
-
-            Schema::table('studios', function (Blueprint $table) {
-                //  $table->foreign('member_id')->references('id')->on('members'); // hasmnany
-            });
         }
 
         if (!Schema::hasTable('branches')) {
             Schema::create('branches', function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('studio_id');
+                $table->foreign('studio_id')->references('id')->on('studios');
                 $table->string('stripe_product_id')->nullable();
                 $table->string('email');
                 $table->string('name');
@@ -57,10 +55,6 @@ class Studio extends Migration
                 $table->string('country')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
-            });
-
-            Schema::table('branches', function (Blueprint $table) {
-                //  $table->foreign('studio_id')->references('id')->on('studios'); // hasmany
             });
         }
     }

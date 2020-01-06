@@ -2,8 +2,8 @@
 
 namespace App\Http\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use bitspro\StripeMarketplace\StripeMarketplaceManager;
+use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
 {
@@ -18,12 +18,13 @@ class Subscription extends Model
     public static function add($data)
     {
         $objStripe = new StripeMarketplaceManager();
-        $subscriptionId = $objStripe->Subscription->save($data['customerId'], $data['planId']);
+        $subscriptionId = $objStripe->Subscription->save($data['customerId'], $data['planId'], $data['quantity']);
         if ($subscriptionId !== false) {
-            $objSubscription = Subscription::create([
-                'user_id' => $data['userId'],
-                'stripe_subscription_id' => $subscriptionId
-            ]);
+            $objSubscription = new Subscription;
+            $objSubscription->user_id = $data['userId'];
+            $objSubscription->stripe_subscription_id = $subscriptionId;
+            $objSubscription->quantity = $data['quantity'];
+            $objSubscription->save();
             return $objSubscription;
         }
         return false;

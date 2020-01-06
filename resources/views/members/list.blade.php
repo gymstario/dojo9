@@ -1,223 +1,63 @@
 @extends('layouts.main')
-@section('title', 'Reset Password')
-@section('menu','member')
+@section('title', 'Members')
+@section('menu','account')
 @section('content')
 <div class="rui-page-title">
-        <div class="container-fluid">
+    <div class="container-fluid" style="display:flex">
+        <div style="flex: 1">
             <h1 class="display-3">
-                Members
+                Members | <span style="font-size: 0.7em;">{{ $members->count() }} Total</span>
             </h1>
-            <div>
-                <button class="btn btn-primary btn-property">Add Member</button>
-            </div>
         </div>
-    </div>
-
-<div class="rui-page-content">
-    <div class="container-fluid">
-        <!--
-        START: Swiper
-
-        Additional attributes:
-            data-swiper-loop
-            data-swiper-grabCursor
-            data-swiper-autoHeight
-            data-swiper-center
-            data-swiper-slides ('auto' or Number)
-            data-swiper-gap
-            data-swiper-speed
-            data-swiper-breakpoints (Example: '992:3,768:2')
-    -->
-        <div class="media-color">
-            <div class="media media-success">
-                <div class="media-img circle-image">S</div>
-                <div class="media-body">
-                    <div class="media-title set-title">Fawaz Ali</div>
-                    <small class="media-subtitle email-text"
-                        ><span class="fas fa-envelope set-mail"></span>
-                        fawaz@bitspro.com
-                        <span class="fas fa-map-marker-alt set-mails"></span
-                        ><span>Geogrageown, TX</span></small
-                    >
-                </div>
-                <div class="rank">
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-certificate set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Rank</div>
-                        <div class="adv-blue">Adv Blue</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span class="fas fa-trophy set-certificate"></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">2</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-shield-alt set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">5</div>
-                    </div>
-                </div>
-                <div>
-                    <span class="btn btn-custom-round">
-                        <span
-                            data-feather="more-vertical"
-                            class="rui-icon rui-icon-stroke-1_5"
-                        ></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="media-color">
-            <div class="media media-success">
-                <div class="media-img circle-image">S</div>
-                <div class="media-body">
-                    <div class="media-title set-title">Fawaz Ali</div>
-                    <small class="media-subtitle email-text"
-                        ><span class="fas fa-envelope set-mail"></span>
-                        fawaz@bitspro.com
-                        <span class="fas fa-map-marker-alt set-mails"></span
-                        ><span>Geogrageown, TX</span></small
-                    >
-                </div>
-                <div class="rank">
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-certificate set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Rank</div>
-                        <div class="adv-blue">Adv Blue</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span class="fas fa-trophy set-certificate"></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">2</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-shield-alt set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">5</div>
-                    </div>
-                </div>
-                <span class="btn btn-custom-round">
-                    <span
-                        data-feather="more-vertical"
-                        class="rui-icon rui-icon-stroke-1_5"
-                    ></span>
-                </span>
-            </div>
-        </div>
-        <div class="media-color">
-            <div class="media media-success">
-                <div class="media-img circle-image">S</div>
-                <div class="media-body">
-                    <div class="media-title set-title">Fawaz Ali</div>
-                    <small class="media-subtitle email-text"
-                        ><span class="fas fa-envelope set-mail"></span>
-                        fawaz@bitspro.com
-                        <span class="fas fa-map-marker-alt set-mails"></span
-                        ><span>Geogrageown, TX</span></small
-                    >
-                </div>
-                <div class="rank">
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-certificate set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Rank</div>
-                        <div class="adv-blue">Adv Blue</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span class="fas fa-trophy set-certificate"></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">2</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-shield-alt set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">5</div>
-                    </div>
-                </div>
-                <span class="btn btn-custom-round">
-                    <span
-                        data-feather="more-vertical"
-                        class="rui-icon rui-icon-stroke-1_5"
-                    ></span>
-                </span>
-            </div>
-        </div>
-        <div class="media-color">
-            <div class="media media-success">
-                <div class="media-img circle-image">S</div>
-                <div class="media-body">
-                    <div class="media-title set-title">Fawaz Ali</div>
-                    <small class="media-subtitle email-text"
-                        ><span class="fas fa-envelope set-mail"></span>
-                        fawaz@bitspro.com
-                        <span class="fas fa-map-marker-alt set-mails"></span
-                        ><span>Geogrageown, TX</span></small
-                    >
-                </div>
-                <div class="rank">
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-certificate set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Rank</div>
-                        <div class="adv-blue">Adv Blue</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span class="fas fa-trophy set-certificate"></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">2</div>
-                    </div>
-                    <div class="certificate-area">
-                        <div class="icon-div">
-                            <span
-                                class="fas fa-shield-alt set-certificate"
-                            ></span>
-                        </div>
-                        <div class="set-rank">Awards</div>
-                        <div class="adv-num">5</div>
-                    </div>
-                </div>
-                <span class="btn btn-custom-round">
-                    <span
-                        data-feather="more-vertical"
-                        class="rui-icon rui-icon-stroke-1_5"
-                    ></span>
-                </span>
-            </div>
-        </div>
+        <a href="{{ route('members.create.get') }}" class="btn btn-success btn-sm btn-uniform">Enrol Member</a>
     </div>
 </div>
+
+
+<div class="rui-page-content" style="padding: 0">
+    <div class="container-fluid" style="padding: 0">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Enrolment</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(count($members->items()) > 0)
+                @foreach($members->items() as $member)
+                <tr>
+                    <td>
+                        @if($member->photo !== null && $member->photo !== '')
+                        <img src="{{ Storage::url($member->photo) }}" />
+                        @endif
+                    </td>
+                    <td>{{ $member->first_name }}</td>
+                    <td>{{ $member->last_name }}</td>
+                    <td>{{ $member->email }}</td>
+                    <td>{{ $member->rank }}</td>
+                    <td>{{ $member->enrolment }}</td>
+                    <td scope="col" style="padding: 0 25px;">
+                        <button type="button" class="btn btn-warning btn-sm btn-uniform"><span class="icon"><span data-feather="edit" class="rui-icon rui-icon-stroke-1_5"></span></span></button>
+                        <button type="button" class="btn btn-danger btn-sm btn-uniform"><span class="icon"><span data-feather="trash" class="rui-icon rui-icon-stroke-1_5"></span></span></button>
+                    </td>
+                </tr>
+                @endforeach
+                @else
+                    <tr>
+                        <td colspan="7">No Members Added</td>
+                    </tr>
+                @endif
+                </tbody>
+                <tfoot>
+                    {!! $members->render() !!}
+                </tfoot>
+            </table>
+        </div>
+    </div>
 @endsection

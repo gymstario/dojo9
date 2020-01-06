@@ -4,64 +4,69 @@ return [
     'dashboard' => [
         'name' => 'Dashboard',
         'icon' => 'home',
-        'url' => '/dashboard'
+        'url' => '/dashboard',
     ],
     'Members' => [
         'name' => 'Members',
         'icon' => 'users',
-        'url' => '/students'
+        'url' => '/members',
     ],
     'payment' => [
         'name' => 'Payments',
         'icon' => 'credit-card',
-        'url' => '/payments'
+        'url' => '/payments',
     ],
     'plan' => [
         'name' => 'Plans',
         'icon' => 'award',
         'url' => '/plans',
-     ],
-     'notify' => [
-         'name' => 'Notify',
-         'icon' => 'award',
-         'url' => '/notify'
-     ],
-     'account' => [
+    ],
+    'notify' => [
+        'name' => 'Notify',
+        'icon' => 'award',
+        'url' => '/notify',
+    ],
+    'account' => [
         'name' => 'Account',
         'icon' => 'award',
         'url' => '/account',
         'items' => [
+            'locations' => [
+                'name' => 'Locations',
+                'icon' => '',
+                'url' => '/account/locations',
+            ],
             'profile' => [
                 'name' => 'Profile',
                 'icon' => '',
-                'url' => '/profile'
+                'url' => '/account/profile',
             ],
             'billing' => [
                 'name' => 'Billing',
                 'icon' => '',
-                'url' => '/billing'
+                'url' => '/account/billing',
             ],
             'merchantservice' => [
                 'name' => 'Merchant Service',
                 'icon' => '',
-                'url' => '/merchantservice'
-            ]
-        ]
+                'url' => '/account/merchant',
+            ],
+        ],
     ],
     /* 'branch' => [
-        'name' => 'Branches',
-        'icon' => 'git-branch',
-        'url' => '/branches'
+    'name' => 'Branches',
+    'icon' => 'git-branch',
+    'url' => '/branches'
     ],
     'class' => [
-        'name' => 'Classes',
-        'icon' => 'pen-tool',
-        'url' => '/classes'
+    'name' => 'Classes',
+    'icon' => 'pen-tool',
+    'url' => '/classes'
     ],
     'studio' => [
-        'name' => 'Studio Settings',
-        'icon' => 'settings',
-        'url' => '/studio'
+    'name' => 'Studio Settings',
+    'icon' => 'settings',
+    'url' => '/studio'
     ], */
     'setting' => [
         'name' => 'Settings',
@@ -71,14 +76,14 @@ return [
             'waivers' => [
                 'name' => 'Waivers',
                 'icon' => '',
-                'url' => '/waivers'
+                'url' => '/waivers',
             ],
             'payments' => [
                 'name' => 'Payments',
                 'icon' => '',
-                'url' => '/payments'
-            ]
-        ]
+                'url' => '/payments',
+            ],
+        ],
     ],
-   
+
 ];

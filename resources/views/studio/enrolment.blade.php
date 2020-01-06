@@ -1,10 +1,7 @@
 @extends('layouts.main')
-@section('title', 'Register')
-@section('menu', 'register')
+@section('title', 'Enrolment')
+@section('menu', 'enrolment')
 @section('content')
-@php
-    $plan = \App\Http\Models\Plan::getAdminPlan($_GET['plan']);
-@endphp
 {{ $errors }}
 <div class="rui-sign">
     {{ Form::open(["id" => "payment-form", "class" => "form rui-sign-form", "style" => "max-width: 100%;padding: 0;"]) }}
@@ -16,11 +13,12 @@
                     <div class="col-12">
                         <h1 class="display-4 mb-10 text-center">Sign Up</h1>
                     </div>
-                    <input type="hidden" name="plan" value="{{ isset($_GET["plan"]) ? $_GET["plan"] : '' }}" />
-                    <input type="hidden" name="role" value="{{ isset($_GET["role"]) ? $_GET["role"] : '' }}" />
-                    {!! field_wrap($errors, "First Name", "firstName", "", [], "col-6") !!}
-                    {!! field_wrap($errors, "Last Name", "lastName", "", [], "col-6") !!}
-                    {!! field_wrap($errors, "Email Address", "email", "email", [], "col-12") !!}
+                    <input type="hidden" name="accountId" value="{{ $studio['stripe_account_id'] }}" />
+                    <input type="hidden" name="plan" value="{{ $plan['stripeId'] }}" />
+                    <input type="hidden" name="role" value="student" />
+                    {!! field_wrap($errors, "First Name", "firstName", "", [], "col-6", $member ?? [], 'first_name') !!}
+                    {!! field_wrap($errors, "Last Name", "lastName", "", [], "col-6", $member ?? [], 'last_name') !!}
+                    {!! field_wrap($errors, "Email Address", "email", "email", [], "col-12", $member ?? [], 'email') !!}
                     {!! field_wrap($errors, "Password", "password", "password", [], "col-6") !!}
                     {!! field_wrap($errors, "Confirm Password", "password_confirmation", "password", [], "col-6") !!}
                     <div class="col-12">
@@ -47,17 +45,16 @@
                     <div class="col-md-8">
                         <div class="block block-pricing block-raised">
                             <input type="hidden" name="plan" value="{{ $plan["stripeId"] }}" />
-                            <input type="hidden" name="role" value="{{ $_GET["role"] }}" />
+                            <input type="hidden" name="role" value="student" />
                             <div class="table table-danger">
                                 <h6 class="category">{{ $plan['name'] }}</h6>
-                                <h1 class="block-caption"><small>$</small>{{ $plan["amount"] / 100 }} <small>/ location</small></h1>
+                            <h1 class="block-caption"><small>$</small>{{ $plan["amount"] / 100 }} <small>/ {{ $plan['interval'] }}</small></h1>
                                 <ul>
                                     @foreach($plan["attributes"] as $key => $attribute)
-                                    <li>@if($attribute === '*') Any @else{{ $attribute }} @endif <b>{{ $key }}</b></li>
+                                    <li>@if($attribute === '*') Unlimited @else{{ $attribute }} @endif <b>{{ $key }}</b></li>
                                     @endforeach
-                                    <li><input type="number" name="quantity" value="{{ isset($_GET["quantity"]) ? $_GET["quantity"] : '1' }}" style="width: 74px;font-size: 1.3em; color: #708090; text-align: center" min="1" /></li>
                                 </ul>
-                                <button class="btn btn-white btn-raise btn-round">Total @currency(($plan["amount"] / 100) * $_GET["quantity"])</button>
+                                <button class="btn btn-white btn-raise btn-round">Total @currency(($plan["amount"] / 100))</button>
                             </div>
                         </div>
                     </div>

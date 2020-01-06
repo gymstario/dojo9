@@ -54,6 +54,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'stripeToken' => ['required', 'string', 'min:8'],
+            'quantity' => ['required'],
             'plan' => ['required'],
             'role' => ['required'],
         ]);

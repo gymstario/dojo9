@@ -2,10 +2,9 @@
 
 namespace bitspro\StripeMarketplace\lib;
 
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use Stripe\Account;
 use Stripe\File;
-use Carbon\Carbon;
 
 class AccountService
 {
@@ -34,6 +33,32 @@ class AccountService
     public static function get($id)
     {
         return Account::retrieve($id);
+    }
+
+    public static function getStudioUpdates($id)
+    {
+        $account = Account::retrieve($id);
+        $return = [];
+        foreach ($account->external_accounts->data as $bank) {
+            $return[] = [
+                'id' => $bank->id,
+                'account' => $bank->last4,
+                'name' => $bank->bank_name,
+                'currency' => $bank->currency,
+                'routing' => $bank->routing_number,
+            ];
+        }
+        if ($account->business_type === 'individual') {
+            return [
+                "verficiationStatus" => $account->individual->verification->status,
+                "banks" => $return,
+            ];
+        } else {
+            return [
+                "verficiationStatus" => $account->business->verification->status,
+                "banks" => $return,
+            ];
+        }
     }
 
     public static function save(
@@ -147,7 +172,6 @@ class AccountService
             $account = Account::update($stripeId, $data);
         }
 
-
         Account::createPerson($account['id'], [
             'first_name' => 'Kathleen',
             'last_name' => 'Banks',
@@ -206,63 +230,68 @@ class AccountService
         $fp = fopen($path, 'r');
         $file = File::create([
             'purpose' => $purpose,
-            'file' => $fp
+            'file' => $fp,
         ]);
         return $file['id'];
     }
 
-    public static function saveCompany($data, $stripeId = null)
+    public static function saveCompany($input, $stripeId = null)
     {
-        $frontId = AccountService::saveFile($data['frontPath']);
-        $backId = AccountService::saveFile($data['frontPath']);
         $data = [
-            'type' => 'custom',
-            'country' => $data['country'],
-            'email' => $data['email'],
+            'email' => $input['email'],
             'requested_capabilities' => [
                 'card_payments',
                 'transfers',
             ],
             'business_type' => 'company',
-            'tos_acceptance' => [
-                'date' => time(),
-                'ip' => $data['ip'],
-            ],
             'business_profile' => [
-                'mcc' => $data['mcc'],
-                'name' => $data['name'],
-                'support_email' => $data['email'],
-                'support_phone' => $data['phone'],
-                'url' => $data['url'],
+                'mcc' => $input['mcc'],
+                'name' => $input['name'],
+                'support_email' => $input['email'],
+                'support_phone' => $input['phone'],
+                'url' => $input['url'],
             ],
             'company' => [
-                'tax_id' => $data['tax'],
+                'tax_id' => $input['tax'],
                 'address' => [
-                    'country' => $data['country'],
-                    'line1' => $data['address'],
-                    'city' => $data['city'],
-                    'state' => $data['state'],
-                    'postal_code' => $data['zip'],
+                    'country' => $input['country'],
+                    'line1' => $input['address'],
+                    'city' => $input['city'],
+                    'state' => $input['state'],
+                    'postal_code' => $input['zip'],
                 ],
-                'name' => $data['name'],
-                'phone' => $data['phone'],
-                'verification' => [
-                    'document' => [
-                        'front' => $frontId,
-                        'back' => $backId
-                    ]
-                ]
-            ],
-            'external_account' => [
-                'object' => 'bank_account',
-                'country' => $data['country'],
-                'currency' => 'usd',
-                'routing_number' => $data['routing'],
-                'account_number' => $data['account'],
+                'name' => $input['name'],
+                'phone' => $input['phone'],
             ],
         ];
+        if (isset($input['frontPath'])) {
+            $frontId = AccountService::saveFile($input['frontPath']);
+            $backId = AccountService::saveFile($input['frontPath']);
+            $datadata['company']['verification'] = [
+                'document' => [
+                    'front' => $frontId,
+                    'back' => $backId,
+                ],
+            ];
+        }
+
+        if (isset($input['routing']) && isset($input['account'])) {
+            $data['external_account'] = [
+                'object' => 'bank_account',
+                'country' => $input['country'],
+                'currency' => 'usd',
+                'routing_number' => $input['routing'],
+                'account_number' => $input['account'],
+            ];
+        }
 
         if ($stripeId == null || $stripeId == '') {
+            $data['tos_acceptance'] = [
+                'date' => time(),
+                'ip' => $input['ip'],
+            ];
+            $data['type'] = 'custom';
+            $data['country'] = $input['country'];
             $account = Account::create($data);
         } else {
             $account = Account::update($stripeId, $data);
@@ -270,45 +299,118 @@ class AccountService
         return $account['id'];
     }
 
-    public static function savePerson($data, $accountId)
+    public static function saveSoleProprietor($input, $business, $stripeId = null)
     {
-        $frontId = AccountService::saveFile($data['frontPath']);
-        $backId = AccountService::saveFile($data['frontPath']);
+        $input['dob'] = Carbon::parse($input['dob']);
+        $data = [
+            'email' => $input['email'],
+            'requested_capabilities' => [
+                'card_payments',
+                'transfers',
+            ],
+            'business_type' => 'individual',
+            'business_profile' => [
+                'mcc' => $business['mcc'],
+                'name' => $business['name'],
+                'support_email' => $input['email'],
+                'support_phone' => $input['phone'],
+                'url' => $business['url'],
+            ],
+            'individual' => [
+                'first_name' => $input['firstName'],
+                'last_name' => $input['lastName'],
+
+                'address' => [
+                    'country' => $input['country'],
+                    'line1' => $input['address'],
+                    'city' => $input['city'],
+                    'state' => $input['state'],
+                    'postal_code' => $input['zip'],
+                ],
+                'dob' => [
+                    'day' => $input['dob']->day,
+                    'month' => $input['dob']->month,
+                    'year' => $input['dob']->year,
+                ],
+                'phone' => $input['phone'],
+                'email' => $input['email'],
+            ],
+        ];
+
+        if (isset($input['frontPath'])) {
+            $frontId = AccountService::saveFile($input['frontPath']);
+            $backId = AccountService::saveFile($input['frontPath']);
+            $data['individual']['verification'] = [
+                'document' => [
+                    'front' => $frontId,
+                    'back' => $backId,
+                ],
+            ];
+        }
+        if (isset($business['routing']) && isset($business['account'])) {
+            $data['external_account'] = [
+                'object' => 'bank_account',
+                'country' => $input['country'],
+                'currency' => 'usd',
+                'routing_number' => $business['routing'],
+                'account_number' => $business['account'],
+            ];
+        }
+        if ($stripeId == null || $stripeId == '') {
+            $data['tos_acceptance'] = [
+                'date' => time(),
+                'ip' => $input['ip'],
+            ];
+            $data['individual']['id_number'] = $input['ssn'];
+            $data['individual']['ssn_last_4'] = substr($input['ssn'], -4);
+            $data['type'] = 'custom';
+            $data['country'] = $input['country'];
+            $account = Account::create($data);
+        } else {
+            $account = Account::update($stripeId, $data);
+        }
+        return $account['id'];
+    }
+
+    public static function savePerson($input, $accountId)
+    {
+        $frontId = AccountService::saveFile($input['frontPath']);
+        $backId = AccountService::saveFile($input['frontPath']);
 
         $relationship = [
             'owner' => true,
             'percent_ownership' => 100,
-            'title' => $data['title'],
+            'title' => $input['title'],
             'representative' => true,
             'executive' => true,
         ];
-        $data['dob'] = Carbon::parse($data['dob']);
+        $input['dob'] = Carbon::parse($input['dob']);
 
         $person = Account::createPerson($accountId, [
-            'first_name' => $data['firstName'],
-            'last_name' => $data['lastName'],
+            'first_name' => $input['firstName'],
+            'last_name' => $input['lastName'],
             'relationship' => $relationship,
             'address' => [
-                'country' => $data['country'],
-                'line1' => $data['address'],
-                'city' => $data['city'],
-                'state' => $data['state'],
-                'postal_code' => $data['zip'],
+                'country' => $input['country'],
+                'line1' => $input['address'],
+                'city' => $input['city'],
+                'state' => $input['state'],
+                'postal_code' => $input['zip'],
             ],
             'dob' => [
-                'day' => $data['dob']->day,
-                'month' => $data['dob']->month,
-                'year' => $data['dob']->year,
+                'day' => $input['dob']->day,
+                'month' => $input['dob']->month,
+                'year' => $input['dob']->year,
             ],
-            'id_number' => $data['ssn'],
-            'phone' => $data['phone'],
-            'email' => $data['email'],
+            'id_number' => $input['ssn'],
+            'phone' => $input['phone'],
+            'email' => $input['email'],
             'verification' => [
                 'document' => [
                     'front' => $frontId,
-                    'back' => $backId
-                ]
-            ]
+                    'back' => $backId,
+                ],
+            ],
         ]);
         return $person['id'];
     }
